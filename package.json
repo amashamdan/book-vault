@@ -1,0 +1,20 @@
+{
+  "name": "book-vault",
+  "version": "1.0.0",
+  "description": "Under construciton",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amashamdan/book-vault.git"
+  },
+  "author": "Amer Hamdan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amashamdan/book-vault/issues"
+  },
+  "homepage": "https://github.com/amashamdan/book-vault#readme"
+}
