@@ -62,21 +62,37 @@ body {
   justify-content: space-around;
 }
 
-/* line 69, ../sass/screen.scss */
+/* line 70, ../sass/screen.scss */
+.login-form p {
+  margin: 10px 0 5px 0;
+}
+/* line 73, ../sass/screen.scss */
+.login-form input {
+  width: 300px;
+  height: 30px;
+  font-size: 1.0em;
+  padding-left: 5px;
+}
+/* line 79, ../sass/screen.scss */
+.login-form button {
+  margin: 20px 0 10px 0;
+}
+
+/* line 84, ../sass/screen.scss */
 .footer {
   color: #88A0A8;
   width: 100%;
   font-size: 0.8em;
   padding: 5px;
 }
-/* line 74, ../sass/screen.scss */
+/* line 89, ../sass/screen.scss */
 .footer ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-/* line 80, ../sass/screen.scss */
+/* line 95, ../sass/screen.scss */
 .footer a {
   color: #88A0A8;
 }

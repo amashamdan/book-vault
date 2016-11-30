@@ -66,6 +66,21 @@ body {
 	justify-content: space-around;
 }
 
+.login-form {
+	p {
+		margin: 10px 0 5px 0;
+	}
+	input {
+		width: 300px;
+		height: 30px;
+		font-size: 1.0em;
+		padding-left: 5px;
+	}
+	button {
+		margin: 20px 0 10px 0;
+	}
+}
+
 .footer {
 	color: $section-bk-color;
 	width: 100%;
