@@ -1,6 +1,83 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+$section-bk-color: #88A0A8;
+$section-font-color: white;
+$generic-button-bk-color: white;
+$generic-button-font-color: #88A0A8;
 
-@import "compass/reset";
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Proza Libre', sans-serif;
+}
+
+@mixin section {
+	background-color: $section-bk-color;
+	color: $section-font-color;
+}
+
+@mixin button {
+	width: 100px;
+	height: 30px;
+	//padding: ;
+	margin: 5px;
+	border: none;
+	font-size: 0.8em;
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.menu {
+	@include section;
+	width: 100%;
+	padding: 10px 0 10px 0;
+	margin-bottom: 30px;
+}
+
+.container {
+	width: 100%;
+	max-width: 1000px;
+	margin: 0 auto;
+}
+
+.flex-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.generic-button {
+	@include button;
+	background-color: $generic-button-bk-color;
+	color: $generic-button-font-color;
+}
+
+.start {
+	@include section;
+	margin-bottom: 30px;
+	padding: 25px;
+}
+
+.button-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+
+.footer {
+	color: $section-bk-color;
+	width: 100%;
+	font-size: 0.8em;
+	padding: 5px;
+	ul {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-around;
+	}
+	a {
+		color: $section-bk-color;
+	}
+}
