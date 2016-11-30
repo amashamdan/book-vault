@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/amashamdan/book-vault/issues"
   },
-  "homepage": "https://github.com/amashamdan/book-vault#readme"
+  "homepage": "https://github.com/amashamdan/book-vault#readme",
+  "dependencies": {
+    "ejs": "^2.5.3",
+    "express": "^4.14.0",
+    "express-force-https": "^1.0.0",
+    "mongodb": "^2.2.12"
+  }
 }
