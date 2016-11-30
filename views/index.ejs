@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Book Vault</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="stylesheets/screen.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Proza+Libre" rel="stylesheet">
+	<script src="scripts/index.js"></script>
+</head>
+<body>
+	
+	<div class="menu">
+		<div class="container">
+			<div class="flex-wrapper">
+				<h1>Book Vault</h1>
+				<div class="button-wrapper">
+					<!-- if !user -->
+					<a href="/login"><button class="generic-button">Login</button></a>
+					<a href="/signup"><button class="generic-button">Sign up</button></a>
+					<!-- else 
+					<button>All books
+					<button>Dashboard
+					<Settings>
+					<logout>
+				-->
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="start">
+		<div class="container">
+			<p>Welcome to Book Vault, your book trading app!</p>
+			<!-- if !user-->
+			<p>To start using the vault, you need to have an account. Once your good to go, here are the things you can do:</p><br/>
+			<li>Add books to your vault.</li>
+			<li>View books added by alll users.</li>
+			<li>Send and receive trade requests from other users.</li><br/>
+			<p>What are you waiting for? Go ahead and sign up for an account to start using this app.</p><br/>
+			<div class="button-wrapper">
+				<a href="/login"><button class="generic-button">Login</button></a>
+				<a href="/signup"><button class="generic-button">Sign up</button></a>
+			</div>
+			<!-- else
+			<p>Hello user
+			<p>From the menu bar, you can chose an action:
+			<li>All books: See all books added by all users.
+			<li>Dashboard: You can manage your books and trading requests here.
+			<li>Settings: Update your name and address.
+			<li>Logout: We don't believe you would that... but it we gave you the option anyway.
+			-->
+		</div>
+		<!-- if user
+		<div class="latest">
+		</div>
+		-->
+		<!-- Footer section. -->
+	</div>
+	<div class="footer">
+		<hr/>
+		<div class="container">
+			<p>Page by Amer Hamdan (email:<a href="mailto:amashamdan@gmail.com"> amashamdan@gmail.com</a>)</p>
+			<p>Visit my pages:</p>
+			<ul class="pages">
+				<li><a href="http://amashamdan.github.io/P1-portfolio/" target="blank">Portfolio</a></li>
+				<li><a href="https://www.linkedin.com/in/amerhamdan" target="blank">Linkedin</a></li>
+				<li><a href="https://github.com/amashamdan" target="blank">Github</a></li>
+				<li><a href="http://codepen.io/amashamdan/" target="blank">CodePen</a></li>
+			</ul>
+			<span style="font-size:0.9em">Copyright © Book Vault 2016. All Rights Reserved</span>
+		</div>
+	</div>
+</body>
+</html> 
