@@ -2,6 +2,8 @@ $section-bk-color: #88A0A8;
 $section-font-color: white;
 $generic-button-bk-color: white;
 $generic-button-font-color: #88A0A8;
+$error-message-font-color: #AE3C3C;
+$error-message-bk-color: #FFACAC;
 
 * {
 	margin: 0;
@@ -58,6 +60,7 @@ body {
 	@include section;
 	margin-bottom: 30px;
 	padding: 25px;
+	overflow-y: auto; 
 }
 
 .button-wrapper {
@@ -66,7 +69,7 @@ body {
 	justify-content: space-around;
 }
 
-.login-form {
+@mixin form {
 	p {
 		margin: 10px 0 5px 0;
 	}
@@ -78,12 +81,34 @@ body {
 	}
 	button {
 		margin: 20px 0 10px 0;
-	}
+	}	
+}
+
+.login-form {
+	@include form;
+}
+
+.register-form {
+	@include form;
+}
+
+.states-list {
+	width: 300px;
+	height: 30px;
+	font-size: 0.9em;
+}
+
+.error-message {
+	color: $error-message-font-color;
+	background-color: $error-message-bk-color;
+	padding: 5px;
+	width:300px;
 }
 
 .footer {
 	color: $section-bk-color;
 	width: 100%;
+	height: 90px;
 	font-size: 0.8em;
 	padding: 5px;
 	ul {
@@ -94,5 +119,11 @@ body {
 	}
 	a {
 		color: $section-bk-color;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.footer {
+		height: 90px;
 	}
 }
