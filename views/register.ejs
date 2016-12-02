@@ -23,6 +23,9 @@
 	</div>
 	<div class="start">
 		<div class="container">
+			<% if (message != undefined) { %>
+			<p class="error-message"><%= message %></p>
+			<% } %>
 			<p>Please enter the following information to sign up (all fields are required):</p>
 			<form class="register-form" method="post" action="/signup">
 				<p>Name:</p>
@@ -61,8 +64,5 @@
 			<span style="font-size:0.9em">Copyright © Book Vault 2016. All Rights Reserved</span>
 		</div>
 	</div>
-	<script>
-		var emails = <%- JSON.stringify(emails) %>
-	</script>
 </body>
 </html> 
