@@ -3,6 +3,7 @@ var secure = require('express-force-https');
 var mongodb = require("mongodb");
 var ejs = require("ejs");
 var passport = require("passport");
+var LocalStrategy = require("passport-local").Strategy;
 var bodyParser = require("body-parser");
 var parser = bodyParser.urlencoded({extended: false});
 var bcrypt = require("bcryptjs");
@@ -21,32 +22,33 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		res.end("Failed to connect to database.");
 	} else {
 		var users = db.collection("users");
-		var message = undefined;
-		var messageType = undefined;
 
 		app.get("/", function(req, res) {
-			res.render("index.ejs");
+			res.render("index.ejs", {"user": undefined});
 		});
 
 		app.get("/login", function(req, res) {
-			res.render("login.ejs", {"message": message, "messageType": messageType});
-			message = undefined;
+			res.render("login.ejs", {"message": undefined, "messageType": undefined});
 		});
+
+		/*app.post("/login", passport.authenticate("local"), function(req, res) {
+			res.render("index.ejs", {"user": req.user});
+		});*/
 
 		app.post("/login", parser, function(req, res) {
 			users.find({"email": req.body.email}).toArray(function(err, result) {
 				if (result.length == 0) {
-					message = "Email not found in database!";
-					messageType = "error";
-					res.redirect("/login");
+					var message = "Email not found in database!";
+					var messageType = "error";
+					res.render("login.ejs", {"message": message, "messageType": messageType});
 				} else {
 					bcrypt.compare(req.body.password, result[0].password, function(err, checkResult) {
 					    if (checkResult) {
 					    	res.redirect("/");
 					    } else {
-					    	message = "Incorrect password.";
-					    	messageType = "error";
-					    	res.redirect("/login");
+					    	var message = "Incorrect password.";
+					    	var messageType = "error";
+					    	res.render("login.ejs", {"message": message, "messageType": messageType});
 					    }
 					});
 				}
@@ -75,9 +77,9 @@ MongoClient.connect(mongoUrl, function(err, db) {
 						"state": req.body.state,
 						"zip": req.body.zip
 					}, function() {
-						message = "Thank you for registering. Now you can login to start using the Vault.";
-						messageType = "success";
-						res.redirect("/login");
+						var message = "Thank you for registering. Now you can login to start using the Vault.";
+						var messageType = "success";
+						res.render("login.ejs", {"message": message, "messageType": messageType});
 					})
 			    });
 			});
