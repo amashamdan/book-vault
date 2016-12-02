@@ -109,9 +109,10 @@ body {
   padding: 5px;
   width: 300px;
   border-radius: 3px;
+  margin-bottom: 10px;
 }
 
-/* line 111, ../sass/screen.scss */
+/* line 112, ../sass/screen.scss */
 .success-message {
   border-radius: 3px;
   margin-bottom: 10px;
@@ -121,7 +122,7 @@ body {
   width: 600px;
 }
 
-/* line 120, ../sass/screen.scss */
+/* line 121, ../sass/screen.scss */
 .footer {
   color: #88A0A8;
   width: 100%;
@@ -129,20 +130,20 @@ body {
   font-size: 0.8em;
   padding: 5px;
 }
-/* line 126, ../sass/screen.scss */
+/* line 127, ../sass/screen.scss */
 .footer ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-/* line 132, ../sass/screen.scss */
+/* line 133, ../sass/screen.scss */
 .footer a {
   color: #88A0A8;
 }
 
 @media screen and (max-width: 600px) {
-  /* line 138, ../sass/screen.scss */
+  /* line 139, ../sass/screen.scss */
   .footer {
     height: 90px;
   }
