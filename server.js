@@ -3,6 +3,8 @@ var secure = require('express-force-https');
 var mongodb = require("mongodb");
 var ejs = require("ejs");
 var passport = require("passport");
+var bodyParser = require("body-parser");
+var parser = bodyParser.urlencoded({extended: false});
 
 var app = express();
 app.use(secure);
@@ -17,6 +19,8 @@ MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
 		res.end("Failed to connect to database.");
 	} else {
+		var users = db.collection("users");
+
 		app.get("/", function(req, res) {
 			res.render("index.ejs");
 		});
@@ -26,8 +30,27 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.get("/signup", function(req, res) {
-			res.render("register.ejs");
-		})
+			users.find({}).toArray(function(err, results) {
+				var emails = [];
+				for (var result in results) {
+					emails.push(results[result].email);
+				}
+				res.render("register.ejs", {"emails": emails});	
+			})
+			
+		});
+
+		app.post("/signup", parser, function(req, res) {
+			users.insert({
+				"name": req.body.name,
+				"email": req.body.email,
+				"password": req.body.password1,
+				"address": req.body.address,
+				"city": req.body.city,
+				"state": req.body.state,
+				"zip": req.body.zip
+			})
+		});
 	}
 });
 
