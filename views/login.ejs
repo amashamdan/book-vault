@@ -24,14 +24,18 @@
 	<div class="start">
 		<div class="container">
 			<% if (message) { %>
+			<% if (messageType == "success") { %>
 			<p class="success-message"><%- JSON.stringify(message) %></p>
+			<% } else if (messageType == "error") { %>
+			<p class="error-message"><%- JSON.stringify(message) %></p>
+			<% } %>
 			<% } %>
 			<p>Please enter your username and password to login:</p>
-			<form class="login-form">
-				<p>Username:</p>
-				<input class="input-field" type="text" placeholder="Enter username" required>
+			<form class="login-form" method="post" action="/login">
+				<p>Email:</p>
+				<input class="input-field" type="text" placeholder="Enter email" required name="email">
 				<p>Password:</p>
-				<input class="input-field" type="password" placeholder="Enter password" required><br/>
+				<input class="input-field" type="password" placeholder="Enter password" required name="password"><br/>
 				<button class="generic-button" type="submit">Login</button>
 			</form>
 		</div>
