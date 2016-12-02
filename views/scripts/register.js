@@ -13,19 +13,31 @@ $(document).ready(function() {
 
 	$(".register-form").submit(function(e) {
 		e.preventDefault();
-
 		$(".error-message").remove();
+		var errorFound = false;
 
 		if (!$.isNumeric($("#zip-code").val()) || ($("#zip-code").val() > 99999) || ($("#zip-code").val() < 10000)) {
 			$(".register-form").prepend("<p class='error-message'>Please enter a valid zip code.</p>");
+			errorFound = true;
 		}
 
 		if ($("#pass1").val() !== $("#pass2").val()) {
 			$(".register-form").prepend("<p class='error-message'>Passwords do not match.</p>");
+			errorFound = true;
+		}
+
+		if (emails.indexOf($("#email").val()) >= 0) {
+			$(".register-form").prepend("<p class='error-message'>Email is already registered.</p>");
+			errorFound = true;
 		}
 
 		if (!isValidEmailAddress($("#email").val())) {
 			$(".register-form").prepend("<p class='error-message'>Please enter a valid email.</p>");
+			errorFound = true;
+		}
+
+		if (!errorFound) {
+			e.target.submit();
 		}
 	});
 });
