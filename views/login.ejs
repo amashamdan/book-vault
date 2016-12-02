@@ -23,6 +23,9 @@
 	</div>
 	<div class="start">
 		<div class="container">
+			<% if (message) { %>
+			<p class="success-message"><%- JSON.stringify(message) %></p>
+			<% } %>
 			<p>Please enter your username and password to login:</p>
 			<form class="login-form">
 				<p>Username:</p>
