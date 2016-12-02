@@ -24,25 +24,25 @@
 	<div class="start">
 		<div class="container">
 			<p>Please enter the following information to sign up (all fields are required):</p>
-			<form class="register-form">
+			<form class="register-form" method="post" action="/signup">
 				<p>Name:</p>
-				<input class="input-field" type="text" placeholder="Enter name" required>
+				<input class="input-field" type="text" placeholder="Enter name" required name="name">
 				<p>Email:</p>
-				<input class="input-field" id="email" type="text" placeholder="Enter email" required>
+				<input class="input-field" type="text" placeholder="Enter email" required name="email" id="email" >
 				<p>Password:</p>
-				<input class="input-field" id="pass1" type="password" placeholder="Enter password" required><br/>
+				<input class="input-field" type="password" placeholder="Enter password" required name="password1" id="pass1" ><br/>
 				<p>Confirm password:</p>
-				<input class="input-field" id="pass2" type="password" placeholder="Enter password" required><br/>
+				<input class="input-field" type="password" placeholder="Enter password" required name="password2" id="pass2" ><br/>
 				<p>Address:</p>
-				<input class="input-field" type="text" placeholder="Enter address" required>
+				<input class="input-field" type="text" placeholder="Enter address" required name="address">
 				<p>City:</p>
-				<input class="input-field" type="text" placeholder="Enter city" required>
+				<input class="input-field" type="text" placeholder="Enter city" required name="city">
 				<p>State:</p>
 				<select class="states-list" name="state" required>
 					<option value="" disabled selected>Select a state</option>
 				</select>
 				<p>Zip code:</p>
-				<input class="input-field" id="zip-code" type="text" placeholder="Enter zip code" required><br/>
+				<input class="input-field" type="text" placeholder="Enter zip code" required name="zip" id="zip-code"><br/>
 				<button class="generic-button" type="submit">Sign up</button>
 			</form>
 		</div>
@@ -61,5 +61,8 @@
 			<span style="font-size:0.9em">Copyright © Book Vault 2016. All Rights Reserved</span>
 		</div>
 	</div>
+	<script>
+		var emails = <%- JSON.stringify(emails) %>
+	</script>
 </body>
 </html> 
