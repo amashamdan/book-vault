@@ -26,11 +26,6 @@ $(document).ready(function() {
 			errorFound = true;
 		}
 
-		if (emails.indexOf($("#email").val()) >= 0) {
-			$(".register-form").prepend("<p class='error-message'>Email is already registered.</p>");
-			errorFound = true;
-		}
-
 		if (!isValidEmailAddress($("#email").val())) {
 			$(".register-form").prepend("<p class='error-message'>Please enter a valid email.</p>");
 			errorFound = true;
