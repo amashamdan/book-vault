@@ -20,13 +20,15 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		res.end("Failed to connect to database.");
 	} else {
 		var users = db.collection("users");
+		var message = undefined;
 
 		app.get("/", function(req, res) {
 			res.render("index.ejs");
 		});
 
 		app.get("/login", function(req, res) {
-			res.render("login.ejs");
+			res.render("login.ejs", {"message": message});
+			message = undefined;
 		});
 
 		app.get("/signup", function(req, res) {
@@ -36,8 +38,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					emails.push(results[result].email);
 				}
 				res.render("register.ejs", {"emails": emails});	
-			})
-			
+			});
 		});
 
 		app.post("/signup", parser, function(req, res) {
@@ -49,6 +50,9 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				"city": req.body.city,
 				"state": req.body.state,
 				"zip": req.body.zip
+			}, function() {
+				message = "Thank you for registering. Now you can login to start using the Vault.";
+				res.redirect("/login");
 			})
 		});
 	}
