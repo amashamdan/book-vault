@@ -56,32 +56,39 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.get("/signup", function(req, res) {
-			users.find({}).toArray(function(err, results) {
-				var emails = [];
-				for (var result in results) {
-					emails.push(results[result].email);
-				}
-				res.render("register.ejs", {"emails": emails});	
-			});
+			res.render("register.ejs", {"message": undefined});
 		});
 
 		app.post("/signup", parser, function(req, res) {
-			bcrypt.genSalt(10, function(err, salt) {
-			    bcrypt.hash(req.body.password1, salt, function(err, hash) {
-					users.insert({
-						"name": req.body.name,
-						"email": req.body.email,
-						"password": hash,
-						"address": req.body.address,
-						"city": req.body.city,
-						"state": req.body.state,
-						"zip": req.body.zip
-					}, function() {
-						var message = "Thank you for registering. Now you can login to start using the Vault.";
-						var messageType = "success";
-						res.render("login.ejs", {"message": message, "messageType": messageType});
-					})
-			    });
+			users.find({}).toArray(function(err, results) {
+				var found = false;
+				for (var result in results) {
+					if (results[result].email == req.body.email) {
+						found = true;
+						break;
+					}
+				}
+				if (found) {
+					res.render("register.ejs", {"message": "Email already registered."})
+				} else {
+					bcrypt.genSalt(10, function(err, salt) {
+					    bcrypt.hash(req.body.password1, salt, function(err, hash) {
+							users.insert({
+								"name": req.body.name,
+								"email": req.body.email,
+								"password": hash,
+								"address": req.body.address,
+								"city": req.body.city,
+								"state": req.body.state,
+								"zip": req.body.zip
+							}, function() {
+								var message = "Thank you for registering. Now you can login to start using the Vault.";
+								var messageType = "success";
+								res.render("login.ejs", {"message": message, "messageType": messageType});
+							})
+					    });
+					});
+				}
 			});
 		});
 	}
