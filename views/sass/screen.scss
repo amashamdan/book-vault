@@ -4,6 +4,8 @@ $generic-button-bk-color: white;
 $generic-button-font-color: #88A0A8;
 $error-message-font-color: #AE3C3C;
 $error-message-bk-color: #FFACAC;
+$success-message-font-color: #0B6E4F;
+$success-message-bk-color: #BCD7CF;
 
 * {
 	margin: 0;
@@ -103,6 +105,16 @@ body {
 	background-color: $error-message-bk-color;
 	padding: 5px;
 	width:300px;
+	border-radius: 3px;
+}
+
+.success-message {
+	border-radius: 3px;
+	margin-bottom: 10px;
+	color: $success-message-font-color;
+	background-color: $success-message-bk-color;
+	padding: 5px;
+	width:600px;
 }
 
 .footer {
