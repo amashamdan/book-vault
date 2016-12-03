@@ -32,6 +32,7 @@
 			<% } %>
 			<p>Please enter your username and password to login:</p>
 			<form class="login-form" method="post" action="/login">
+				<input type="hidden" name="_csrf" value=<%= csrfToken %>>
 				<p>Email:</p>
 				<input class="input-field" type="text" placeholder="Enter email" required name="email">
 				<p>Password:</p>

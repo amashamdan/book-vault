@@ -28,6 +28,7 @@
 			<% } %>
 			<p>Please enter the following information to sign up (all fields are required):</p>
 			<form class="register-form" method="post" action="/signup">
+				<input type="hidden" name="_csrf" value=<%= csrfToken %>>
 				<p>Name:</p>
 				<input class="input-field" type="text" placeholder="Enter name" required name="name">
 				<p>Email:</p>
