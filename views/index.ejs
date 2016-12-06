@@ -19,7 +19,10 @@
 					<a href="/login"><button class="generic-button">Login</button></a>
 					<a href="/signup"><button class="generic-button">Sign up</button></a>
 					<% } else { %>
-					<p>LOGIN SUCCESS</p>
+					<a href="/all"><button class="generic-button">All books</button></a>
+					<a href="/dashboard"><button class="generic-button">Dashboard</button></a>
+					<a href="/profile"><button class="generic-button">Profile</button></a>
+					<a href="/logout"><button class="generic-button">Logout</button></a>
 					<% } %>
 				</div>
 			</div>
@@ -27,8 +30,8 @@
 	</div>
 	<div class="start">
 		<div class="container">
+			<% if (!user) { %>
 			<p>Welcome to Book Vault, your book trading app!</p>
-			<!-- if !user-->
 			<p>To start using the vault, you need to have an account. Once your good to go, here are the things you can do:</p><br/>
 			<li>Add books to your vault.</li>
 			<li>View books added by alll users.</li>
@@ -38,21 +41,23 @@
 				<a href="/login"><button class="generic-button">Login</button></a>
 				<a href="/signup"><button class="generic-button">Sign up</button></a>
 			</div>
-			<!-- else
-			<p>Hello user
-			<p>From the menu bar, you can chose an action:
-			<li>All books: See all books added by all users.
-			<li>Dashboard: You can manage your books and trading requests here.
-			<li>Settings: Update your name and address.
-			<li>Logout: We don't believe you would that... but it we gave you the option anyway.
-			-->
+			<% } else { %>
+			<p>Welcome <%- JSON.stringify(user.name) %></p><br/>
+			<p>From the menu bar, you can chose an action:</p><br/>
+			<li>All books: See all books added by all users.</li>
+			<li>Dashboard: You can manage your books and trading requests here.</li>
+			<li>Profile: Update your name and address.</li>
+			<li>Logout: We don't believe you would that... but it we gave you the option anyway.</li>
+			<% } %>
 		</div>
-		<!-- if user
-		<div class="latest">
-		</div>
-		-->
-		<!-- Footer section. -->
 	</div>
+	<% if (user) { %>
+	<div class="start">
+		<div class="container">
+			<p>Latest books added:</p>
+		</div>
+	</div>
+	<% } %>
 	<div class="footer">
 		<hr/>
 		<div class="container">
