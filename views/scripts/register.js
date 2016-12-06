@@ -21,7 +21,19 @@ $(document).ready(function() {
 			errorFound = true;
 		}
 
-		if ($("#pass1").val() !== $("#pass2").val()) {
+		if ($("#pass1").val().length < 8) {
+			$(".register-form").prepend("<p class='error-message'>Password is not 8 or more characters.</p>");
+			errorFound = true;
+		}else if (!$("#pass1").val().match(/[A-Z]/g)) {
+			$(".register-form").prepend("<p class='error-message'>Password doesn't contain a capital letter.</p>");
+			errorFound = true;
+		}else if (!$("#pass1").val().match(/[0-9]/g)) {
+			$(".register-form").prepend("<p class='error-message'>Password doesn't contain a number.</p>");
+			errorFound = true;
+		}else if (!$("#pass1").val().match(/[!@#$%^&*]/g)) {
+			$(".register-form").prepend("<p class='error-message'>Password doesn't contain a special character.</p>");
+			errorFound = true;
+		} else if ($("#pass1").val() !== $("#pass2").val()) {
 			$(".register-form").prepend("<p class='error-message'>Passwords do not match.</p>");
 			errorFound = true;
 		}
