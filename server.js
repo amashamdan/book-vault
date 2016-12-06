@@ -105,7 +105,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 							}, function() {
 								var message = "Thank you for registering. Now you can login to start using the Vault.";
 								var messageType = "success";
-								res.render("login.ejs", {"message": message, "messageType": messageType});
+								res.render("login.ejs", {"csrfToken": req.csrfToken(), "message": message, "messageType": messageType});
 							})
 					    });
 					});
