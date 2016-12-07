@@ -36,6 +36,8 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		res.end("Failed to connect to database.");
 	} else {
 		var users = db.collection("users");
+		var passwordUpdateMessage = undefined;
+
 
 		app.get("/", function(req, res) {
 			if (req.session.user) {
@@ -118,7 +120,8 @@ MongoClient.connect(mongoUrl, function(err, db) {
 
 		app.get("/profile", function(req, res) {
 			if (req.session.user) {
-				res.render("profile.ejs", {"csrfToken": req.csrfToken(), user: req.session.user});
+				res.render("profile.ejs", {"csrfToken": req.csrfToken(), user: req.session.user, "passwordUpdateMessage": passwordUpdateMessage});
+				passwordUpdateMessage = undefined;
 			} else {
 				res.redirect("/");
 			}
@@ -136,6 +139,25 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					});
 				}
 			);
+		});
+
+		app.post("/updatePassword", parser, function(req, res) {
+			bcrypt.genSalt(10, function(err, salt) {
+			    bcrypt.hash(req.body.password1, salt, function(err, hash) {
+					users.update(
+						{"email": req.session.user.email},
+						{"$set": {"password": hash}},
+						function() {
+							// Can save info to req.session.user directly.
+							users.find({"email": req.session.user.email}).toArray(function(err, result) {
+								req.session.user = result[0];
+								passwordUpdateMessage = "Password changed successfully."
+								res.redirect("/profile");
+							});
+						}
+					)
+			    });
+			});
 		});
 	}
 });
