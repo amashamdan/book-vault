@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Book Vault</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="stylesheets/screen.css"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Proza+Libre" rel="stylesheet">
+	<script src="scripts/profile.js"></script>
+</head>
+<body>
+	<div class="menu">
+		<div class="container">
+			<div class="flex-wrapper">
+				<h2>Book Vault Profile</h2>
+				<div class="button-wrapper">
+					<a href="/"><button class="generic-button">Home</button></a>
+					<a href="/all"><button class="generic-button">All books</button></a>
+					<a href="/dashboard"><button class="generic-button">Dashboard</button></a>
+					<a href="/logout"><button class="generic-button">Logout</button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="start">
+		<div class="container">
+			<p>Here you can check your information. Click 'Edit' to edit any field (email cannot be changed).</p>
+			<p class="info-header"><strong>Name:</strong></p>
+			<p class="info"><%= user.name %></p>
+			<p class="info-header"><strong>Email:</strong></p>
+			<p class="info"><%= user.email %></p>
+			<p class="info-header"><strong>Address:</strong></p>
+			<p class="info"><%= user.address %></p>
+			<p class="info"><%= user.city %>, <%= user.state %> <%= user.zip %></p>
+			<p class="info-header"><strong>Books added:</strong> <%= user.booksAdded %></p><br/>
+			<button id="edit" class="generic-button">Edit info</button><br/>
+			<button class="generic-button">Change password</button>
+		</div>
+	</div>
+	<div class="footer">
+		<hr/>
+		<div class="container">
+			<p>Page by Amer Hamdan (email:<a href="mailto:amashamdan@gmail.com"> amashamdan@gmail.com</a>)</p>
+			<p>Visit my pages:</p>
+			<ul class="pages">
+				<li><a href="http://amashamdan.github.io/P1-portfolio/" target="blank">Portfolio</a></li>
+				<li><a href="https://www.linkedin.com/in/amerhamdan" target="blank">Linkedin</a></li>
+				<li><a href="https://github.com/amashamdan" target="blank">Github</a></li>
+				<li><a href="http://codepen.io/amashamdan/" target="blank">CodePen</a></li>
+			</ul>
+			<span style="font-size:0.9em">Copyright © Book Vault 2016. All Rights Reserved</span>
+		</div>
+	</div>
+	<script>
+		var csrfToken =  <%- JSON.stringify(csrfToken) %>
+		var name = <%- JSON.stringify(user.name) %>;
+		var email = <%- JSON.stringify(user.email) %>;
+		var address= <%- JSON.stringify(user.address) %>;
+		var city = <%- JSON.stringify(user.city) %>;
+		var state = <%- JSON.stringify(user.state) %>;
+		var zip = <%- JSON.stringify(user.zip) %>;
+	</script>
+</body>
+</html> 
