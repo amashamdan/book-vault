@@ -95,14 +95,26 @@ body {
   margin: 20px 0 10px 0;
 }
 
-/* line 97, ../sass/screen.scss */
+/* line 98, ../sass/screen.scss */
+.update-form input {
+  width: 220px;
+  height: 25px;
+  font-size: 0.8em;
+  padding-left: 5px;
+}
+/* line 104, ../sass/screen.scss */
+.update-form button {
+  margin-top: 10px;
+}
+
+/* line 109, ../sass/screen.scss */
 .states-list {
   width: 300px;
   height: 30px;
   font-size: 0.9em;
 }
 
-/* line 103, ../sass/screen.scss */
+/* line 115, ../sass/screen.scss */
 .error-message {
   color: #AE3C3C;
   background-color: #FFACAC;
@@ -112,7 +124,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* line 112, ../sass/screen.scss */
+/* line 124, ../sass/screen.scss */
 .success-message {
   border-radius: 3px;
   margin-bottom: 10px;
@@ -122,7 +134,12 @@ body {
   width: 600px;
 }
 
-/* line 121, ../sass/screen.scss */
+/* line 133, ../sass/screen.scss */
+.info-header {
+  margin-top: 15px;
+}
+
+/* line 137, ../sass/screen.scss */
 .footer {
   color: #88A0A8;
   width: 100%;
@@ -130,20 +147,20 @@ body {
   font-size: 0.8em;
   padding: 5px;
 }
-/* line 127, ../sass/screen.scss */
+/* line 143, ../sass/screen.scss */
 .footer ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-/* line 133, ../sass/screen.scss */
+/* line 149, ../sass/screen.scss */
 .footer a {
   color: #88A0A8;
 }
 
 @media screen and (max-width: 600px) {
-  /* line 139, ../sass/screen.scss */
+  /* line 155, ../sass/screen.scss */
   .footer {
     height: 90px;
   }
