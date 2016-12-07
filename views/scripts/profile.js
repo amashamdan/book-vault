@@ -1,3 +1,6 @@
+var states = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+
+
 $(document).ready(function() {
 	$("#edit").click(function() {
 		changeLayout("update-info");
@@ -18,11 +21,11 @@ function changeLayout(caller) {
 			'<p class="info-header"><strong>Address:</strong></p>' + 
 			'<input type="text" name="address" value="' + address + '"><br/>' + 
 			'<input type="text" name="city" value="' + city + '"><br/>' +
-			'<input type="text" name="state" value="' + state + '"><br/>' +
+			'<select style="width: 228px; height:25px;" name="state" required></select><br/>' +
 			'<input type="text" name="zip" value="' + zip + '"><br/>' + 
 			'<button class="generic-button" type="submit">Submit</button>' + 
 			'<button class="generic-button" id="cancel">Cancel</button>' + 
-			'</form></div>'
+			'</form></div>';
 	} else if (caller == "update-password") {
 		var newContent = '<div class="container">' +
 			"<form class='update-form' id='password-update-form' action='/updatePassword' method='post'>" + 
@@ -33,13 +36,22 @@ function changeLayout(caller) {
 			'<input id="pass2" type="password" name="password2"><br/>' + 
 			'<button class="generic-button" type="submit">Submit</button>' + 
 			'<button class="generic-button" id="cancel">Cancel</button>' + 
-			'</form></div>'
+			'</form></div>';
 	}
 
 	$(".start").children().slideToggle(function() {
 		$(".start").children().remove();
 		$(".start").css({"display": "none"});
 		$(".start").append(newContent);
+		if (caller == "update-info") {
+			for (var item in states) {
+				if (states[item].toLowerCase() == state.toLowerCase()) {
+					$("select").append("<option class='state-option' value='" + states[item].toLowerCase() + "' selected>" + states[item] + "</option>");
+				} else {
+					$("select").append("<option class='state-option' value='" + states[item].toLowerCase() + "'>" + states[item] + "</option>");
+				}
+			}
+		}
 		$(".start").slideToggle();
 		// The following two handlers should be here since they cannot be run before they are appended.
 		$("#cancel").click(function(e) {
