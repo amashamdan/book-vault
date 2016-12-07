@@ -102,7 +102,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 								"password": hash,
 								"address": req.body.address,
 								"city": req.body.city,
-								"state": req.body.state.replace(/[a-z]/, function(letter) {
+								"state": req.body.state.replace(/\b[a-z]/g, function(letter) {
 									return letter.toUpperCase();
 								}),
 								"zip": req.body.zip,
@@ -130,7 +130,9 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		app.post("/update", parser, function(req, res) {
 			users.update(
 				{"email": req.session.user.email},
-				{"$set": {"name": req.body.name, "address": req.body.address, "city": req.body.city, "state": req.body.state, "zip": req.body.zip}},
+				{"$set": {"name": req.body.name, "address": req.body.address, "city": req.body.city, "zip": req.body.zip, "state": req.body.state.replace(/\b[a-z]/g, function(letter) {
+						return letter.toUpperCase();
+					})}},
 				function() {
 					// Can save info to req.session.user directly.
 					users.find({"email": req.session.user.email}).toArray(function(err, result) {
