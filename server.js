@@ -122,8 +122,11 @@ MongoClient.connect(mongoUrl, function(err, db) {
 
 		app.get("/profile", function(req, res) {
 			if (req.session.user) {
-				res.render("profile.ejs", {"csrfToken": req.csrfToken(), user: req.session.user, "passwordUpdateMessage": passwordUpdateMessage});
-				passwordUpdateMessage = undefined;
+				users.find({"email": req.session.user.email}).toArray(function(err, result) {
+					req.session.user = result[0];
+					res.render("profile.ejs", {"csrfToken": req.csrfToken(), user: req.session.user, "passwordUpdateMessage": passwordUpdateMessage});
+					passwordUpdateMessage = undefined;
+				});
 			} else {
 				res.redirect("/");
 			}
@@ -136,11 +139,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 						return letter.toUpperCase();
 					})}},
 				function() {
-					// Can save info to req.session.user directly.
-					users.find({"email": req.session.user.email}).toArray(function(err, result) {
-						req.session.user = result[0];
-						res.redirect("/profile");
-					});
+					res.redirect("/profile");
 				}
 			);
 		});
