@@ -6,6 +6,13 @@ $error-message-font-color: #AE3C3C;
 $error-message-bk-color: #FFACAC;
 $success-message-font-color: #0B6E4F;
 $success-message-bk-color: #BCD7CF;
+$search-div-bk-color: black;
+$search-div-font-color: white;
+$cancel-bk-color: #F05D5E;
+$cancel-font-color: white;
+$add-bk-color: #0F7173;
+$add-font-color: white;
+
 
 * {
 	margin: 0;
@@ -134,12 +141,64 @@ body {
 	margin-top: 15px;
 }
 
+#add-book-form {
+	@include form;
+}
+
+#search-results {
+	position: fixed;
+	top: 20px;
+	left: 20px;
+	width: calc(100vw - 40px);
+	height: calc(100vh - 40px);
+	background-color: $search-div-bk-color;
+	color: $search-div-font-color;
+	opacity: 0.9;
+	display: none;
+	overflow-y: auto;
+}
+
+.result {
+	margin: 40px;
+}
+
+.other-information {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 10px;
+}
+
+.result-image {
+	width: 128px;
+}
+
+.info-wrapper {
+	margin-left: 10px;
+	width: calc(100% - 138px)
+}
+
+.add-this-book {
+	@include button;
+	background-color: $add-bk-color;
+	color: $add-font-color;
+}
+
+.cancel-button {
+	@include button;
+	background-color: $cancel-bk-color;
+	color: $cancel-font-color;
+}
+
+.stop-scrolling {
+	height: 100%;
+	overflow: hidden;
+}
+
 .footer {
 	color: $section-bk-color;
 	width: 100%;
 	height: 90px;
 	font-size: 0.8em;
-	padding: 5px;
 	ul {
 		list-style: none;
 		display: flex;
