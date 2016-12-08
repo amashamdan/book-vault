@@ -175,7 +175,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 						var userBooks = [];
 						for (var isbn in isbns) {
 							books.find({"isbn": isbns[isbn]}).toArray(function(err, bookResult) {
-								userBooks.push(bookResult);
+								userBooks.push(bookResult[0]);
 								if (userBooks.length == isbns.length) {
 									res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": userBooks});
 								}
@@ -187,26 +187,72 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.post("/addbook", parser, function(req, res) {
+			users.find({"email": req.session.user.email}).toArray(function(err, result) {
+				if (result[0].books.indexOf(req.body.book.isbn) > -1) {
+					res.status(200);
+					res.end();
+				} else {
+					users.update(
+						{"email": req.session.user.email},
+						{"$addToSet": {"books": req.body.book.isbn}, "$inc": {"booksAdded": 1}},
+						function() {
+							books.find({"isbn": req.body.book.isbn}).toArray(function(err, result) {
+								if (result[0]) {
+									books.update(
+										{"isbn": req.body.book.isbn},
+										{"$addToSet": {"owners": req.session.user.email}},
+										function() {
+											res.status(201);
+											res.end();
+										}
+									);
+								} else {
+									books.insert({
+										"owners": [req.session.user.email],
+										"title": req.body.book.title,
+										"link": req.body.book.link,
+										"image": req.body.book.image,
+										"authors": req.body.book.authors,
+										"categories": req.body.book.categories,
+										"pages": req.body.book.pages,
+										"description": req.body.book.description,
+										"isbn": req.body.book.isbn
+									}, function() {
+										res.status(201);
+										res.end();
+									})							
+								}
+							});
+						}
+					);
+				}
+			});
+		});
+
+		app.post("/remove", parser, function(req, res) {
 			users.update(
 				{"email": req.session.user.email},
-				{"$addToSet": {"books": req.body.book.isbn}, "$inc": {"booksAdded": 1}},
+				{"$inc": {"booksAdded": -1}, "$pull": {"books": req.body.isbn}},
 				function() {
-					books.insert({
-						"owners": [{"name": req.session.user.name,"email": req.session.user.email}],
-						"title": req.body.book.title,
-						"link": req.body.book.link,
-						"image": req.body.book.image,
-						"authors": req.body.book.authors,
-						"categories": req.body.book.categories,
-						"pages": req.body.book.pages,
-						"description": req.body.book.description,
-						"isbn": req.body.book.isbn
-					}, function() {
-						res.status(201);
-						res.end();
-					})
+					books.find({"isbn": req.body.isbn}).toArray(function(err, result) {
+						if (result[0].owners.length > 1) {
+							books.update(
+								{"isbn": req.body.isbn},
+								{"$pull": {"owners": req.session.user.email}},
+								function() {
+									res.status(201);
+									res.end();
+								}
+							);
+						} else {
+							books.remove({"isbn": req.body.isbn}, function() {
+								res.status(201);
+								res.end();
+							});
+						}
+					});
 				}
-			)
+			);
 		});
 	}
 });
