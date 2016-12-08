@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	$("#add-book-form").submit(function(e) {
 		e.preventDefault();
+		$("#search-results").children().remove();
+		$("#search-results").append('<p class="wait-message">Please wait while we contact Google Books API.</p>')
+		$("#search-results").fadeIn();
+		$("body").addClass("stop-scrolling");
 		if ($("#author").val() == "" || $("#author").val() == " ") {
 			var link = "https://www.googleapis.com/books/v1/volumes?q=" + $("#title").val() + "&key=AIzaSyBozCv6XN30xQ6TiLYa3LJEbcUCZj8bTjg";
 		} else {
@@ -47,8 +51,6 @@ $(document).ready(function() {
 							'</div>' +
 							'</div><hr/>');
 					}
-					$("#search-results").fadeIn();
-					$("body").addClass("stop-scrolling");
 
 					$(".cancel-button").click(function(e) {
 						e.preventDefault();
@@ -58,7 +60,6 @@ $(document).ready(function() {
 
 					$(".more-info").click(function(e) {
 						e.preventDefault();
-						console.log("QQ")
 						var link = $(this).parent().attr("href");
 						window.open(link, "_blank")
 					});
