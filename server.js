@@ -36,6 +36,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		res.end("Failed to connect to database.");
 	} else {
 		var users = db.collection("users");
+		var books = db.collection("shelf");
 		var passwordUpdateMessage = undefined;
 
 
@@ -106,7 +107,8 @@ MongoClient.connect(mongoUrl, function(err, db) {
 									return letter.toUpperCase();
 								}),
 								"zip": req.body.zip,
-								"booksAdded": 0
+								"booksAdded": 0,
+								"books": []
 							}, function() {
 								var message = "Thank you for registering. Now you can login to start using the Vault.";
 								var messageType = "success";
@@ -160,6 +162,52 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					)
 			    });
 			});
+		});
+
+		app.get("/dashboard", function(req, res) {
+			users.find({"email": req.session.user.email}).toArray(function(err, result) {
+				if (err) {
+					res.end("error in database");
+				} else {
+					if (result[0].books.length == 0) {
+						res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": undefined});
+					} else {
+						var isbns = result[0].books;
+						var userBooks = [];
+						for (var isbn in isbns) {
+							books.find({"isbn": isbns[isbn]}).toArray(function(err, bookResult) {
+								userBooks.push(bookResult);
+								if (userBooks.length == isbns.length) {
+									res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": userBooks});
+								}
+							})
+						}
+					}
+				}
+			})
+		});
+
+		app.post("/addbook", parser, function(req, res) {
+			users.update(
+				{"email": req.session.user.email},
+				{"$addToSet": {"books": req.body.book.isbn}, "$inc": {"booksAdded": 1}},
+				function() {
+					books.insert({
+						"owners": [{"name": req.session.user.name,"email": req.session.user.email}],
+						"title": req.body.book.title,
+						"link": req.body.book.link,
+						"image": req.body.book.image,
+						"authors": req.body.book.authors,
+						"categories": req.body.book.categories,
+						"pages": req.body.book.pages,
+						"description": req.body.book.description,
+						"isbn": req.body.book.isbn
+					}, function() {
+						res.status(201);
+						res.end();
+					})
+				}
+			)
 		});
 	}
 });
