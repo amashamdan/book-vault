@@ -55,8 +55,18 @@
 			<% if (userBooks == undefined) { %>
 			<p>You still haven't added any books.</p>
 			<% } else { %>
-			<%= userBooks %>
-			<% } %>
+			<div class="dashboard-books">
+				<% for (var book in userBooks) { %>
+				<div class="dashboard-book">
+					<input type="hidden" class="dashboard-book-isbn" value=<%= userBooks[book].isbn %>>
+					<button class="dashboard-more-info">More info</button>
+					<button class="delete-book">Delete</button>
+					<img src=<%= userBooks[book].image %>>
+					<p><%= userBooks[book].title %></p>
+				</div>
+				<% } %>
+				<% } %>
+			</div>
 		</div>
 	</div>
 
