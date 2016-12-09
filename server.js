@@ -254,6 +254,17 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				}
 			);
 		});
+
+		app.get("/all", function(req, res) {
+			books.find({}).toArray(function(err, results) {
+				if (err) {
+					res.end("Error in database");
+				} else {
+					var allUsersBooks = results;
+					res.render("all.ejs", {user: req.session.user, allUsersBooks: allUsersBooks});
+				}
+			});
+		})
 	}
 });
 
