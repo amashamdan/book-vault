@@ -12,7 +12,7 @@
 	<div class="menu">
 		<div class="container">
 			<div class="flex-wrapper">
-				<h1>Book Vault</h1>
+				<h2>Book Vault Dashboard</h2>
 				<div class="button-wrapper">
 					<a href="/"><button class="generic-button">Home</button></a>
 					<a href="/all"><button class="generic-button">All books</button></a>
@@ -59,7 +59,7 @@
 				<% for (var book in userBooks) { %>
 				<div class="dashboard-book">
 					<input type="hidden" class="dashboard-book-isbn" value=<%= userBooks[book].isbn %>>
-					<button class="dashboard-more-info">More info</button>
+					<a href=<%= userBooks[book].link %> target="blank"><button class="dashboard-more-info">More info</button></a>
 					<button class="delete-book">Delete</button>
 					<img src=<%= userBooks[book].image %>>
 					<p><%= userBooks[book].title %></p>
