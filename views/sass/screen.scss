@@ -229,10 +229,23 @@ body {
 		background-color: $cancel-bk-color;
 		color: $cancel-font-color;
 	}
-	.dashboard-more-info {
+	.dashboard-more-info, .trade {
 		background-color: $generic-button-bk-color;
 		color: $generic-button-font-color;
 	}
+}
+
+.more-info {
+	position: fixed;
+	top: 100px;
+	left: 100px;
+	width: calc(100vw - 200px);
+	height: calc(100vh - 200px);
+	background-color: $search-div-bk-color;
+	color: $search-div-font-color;
+	opacity: 0.9;
+	display: none;
+	overflow-y: auto;
 }
 
 .footer {

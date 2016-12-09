@@ -272,32 +272,46 @@ body {
   color: white;
 }
 /* line 232, ../sass/screen.scss */
-.dashboard-book .dashboard-more-info {
+.dashboard-book .dashboard-more-info, .dashboard-book .trade {
   background-color: white;
   color: #88A0A8;
 }
 
 /* line 238, ../sass/screen.scss */
+.more-info {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  width: calc(100vw - 200px);
+  height: calc(100vh - 200px);
+  background-color: black;
+  color: white;
+  opacity: 0.9;
+  display: none;
+  overflow-y: auto;
+}
+
+/* line 251, ../sass/screen.scss */
 .footer {
   color: #88A0A8;
   width: 100%;
   height: 90px;
   font-size: 0.8em;
 }
-/* line 243, ../sass/screen.scss */
+/* line 256, ../sass/screen.scss */
 .footer ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-/* line 249, ../sass/screen.scss */
+/* line 262, ../sass/screen.scss */
 .footer a {
   color: #88A0A8;
 }
 
 @media screen and (max-width: 600px) {
-  /* line 255, ../sass/screen.scss */
+  /* line 268, ../sass/screen.scss */
   .footer {
     height: 90px;
   }
