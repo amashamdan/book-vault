@@ -30,7 +30,11 @@
 				<% for (var book in allUsersBooks) { %>
 				<div class=dashboard-book>
 				<button class="dashboard-more-info">More info</button>
+				<% if (user.books.indexOf(allUsersBooks[book].isbn) == -1) { %>
 				<button class="trade">Trade</button>
+				<% } else { %>
+				<button class="you-own-it-button">You own it</button>
+				<% } %>
 				<img src=<%= allUsersBooks[book].image %>>
 				<p><%= allUsersBooks[book].title %></p>
 				</div>
