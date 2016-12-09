@@ -68,7 +68,7 @@ $(document).ready(function() {
 						e.preventDefault();
 						var book = {
 							"title": $(this).siblings(".book-title").html(),
-							"link": $(this).siblings("a").attr("href"),
+							"link": $(this).children("a").attr("href"),
 							"image": $(this).siblings(".other-information").children(".image-wrapper").children("img").attr("src"),
 							"authors": $(this).siblings(".other-information").children(".info-wrapper").children(".result-authors").children("span").html(),
 							"categories": $(this).siblings(".other-information").children(".info-wrapper").children(".result-categotries").children("span").html(),
@@ -82,8 +82,9 @@ $(document).ready(function() {
 							type: "POST",
 							data: {_csrf: csrfToken, book: book},
 							statusCode: {
-								201: handle201,
-								404: handle404
+								200: add200,
+								201: add201,
+								404: add404
 							}
 						});
 					});
@@ -94,14 +95,40 @@ $(document).ready(function() {
 			}
 		})
 	});
+
+	$(".delete-book").click(function()	{
+		var isbn = $(this).siblings(".dashboard-book-isbn").attr("value");
+		$.ajax({
+			url: "/remove",
+			type: "POST",
+			data: {_csrf: csrfToken, isbn: isbn},
+			statusCode: {
+				201: delete201,
+				404: delete404 
+			}
+		})
+	})
 });
 
-function handle201() {
+function add200() {
+	alert("Book is already added... Wake up my friend!");	
+}
+
+function add201() {
 	alert("Book added successfully");
 	location.reload();
 }
 
 
-function handle404() {
-	console.log("404");
+function add404() {
+	alert("An error occured.");
+}
+
+function delete201() {
+	location.reload();
+}
+
+
+function delete404() {
+	alert("An error occured.");
 }
