@@ -108,7 +108,9 @@ MongoClient.connect(mongoUrl, function(err, db) {
 								}),
 								"zip": req.body.zip,
 								"booksAdded": 0,
-								"books": []
+								"books": [],
+								"incomingRequests": [],
+								"outgoingRequests": []
 							}, function() {
 								var message = "Thank you for registering. Now you can login to start using the Vault.";
 								var messageType = "success";
@@ -265,16 +267,36 @@ MongoClient.connect(mongoUrl, function(err, db) {
 							res.end("Error in database");
 						} else {
 							var allUsersBooks = results;
-							res.render("all.ejs", {user: req.session.user, allUsersBooks: allUsersBooks});
+							res.render("all.ejs", {user: req.session.user, allUsersBooks: allUsersBooks, "csrfToken": req.csrfToken()});
 						}
 					});					
 				});
 			} else {
 				res.redirect("/");
 			}
-		})
+		});
+
+		app.get("/bookOwners/:selectedBook", function(req, res) {
+			users.find({"books": req.params.selectedBook}).toArray(function(err, owners) {
+				res.send(owners);
+				res.end();
+			})
+		});
+
+		app.post("/request", parser, function(req, res) {
+			users.update(
+				{"email": req.session.user.email},
+				{"$push": {"outgoingRequests": {"outGoingBook": req.body.selectedBook, "incomingBook": req.body.otherUserBook, "otherUser": req.body.owner, "status": "Pending"}}}
+			);
+			users.update(
+				{"email": req.body.owner},
+				{"$push": {"incomingRequests": {"outGoingBook": req.body.otherUserBook, "incomingBook": req.body.selectedBook, "otherUser": req.session.user.email, "status": "Pending"}}}
+			);
+			res.status(201);
+			res.end();
+		});
 	}
 });
 
 var port = Number(process.env.PORT || 8080);
-app.listen(port);
+app.listen(port);	
