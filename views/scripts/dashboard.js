@@ -23,6 +23,7 @@ $(document).ready(function() {
 					} else {
 						var limit = 10;
 					}
+					console.log(results);
 					for (var i = 0; i < limit; i++) {
 						var title = results.items[i].volumeInfo.title;
 						if (results.items[i].volumeInfo.subtitle) {
@@ -34,7 +35,12 @@ $(document).ready(function() {
 						var description = results.items[i].volumeInfo.description;
 						var image = results.items[i].volumeInfo.imageLinks.thumbnail;
 						var pages = results.items[i].volumeInfo.pageCount;
-						var isbn = results.items[i].volumeInfo.industryIdentifiers[0].identifier;
+						if (results.items[i].volumeInfo.industryIdentifiers) {
+							var isbn = results.items[i].volumeInfo.industryIdentifiers[0].identifier;
+						} else {
+							continue
+						}
+						
 						$("#search-results").append('<div class="result">' + 
 							'<input type="hidden" class="isbn" value=' + isbn + '>' +
 							'<p class="book-title">' + title + '</p>' +
