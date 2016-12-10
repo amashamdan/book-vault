@@ -25,6 +25,9 @@
 
 	<div class="start">
 		<div class="container">
+			<% if (allUsersBooks.length == 0) { %>
+			<p>Users don't seem to like reading... None of them has added any! Be the first to add a book from your dashboard.</p>
+			<% } else { %>
 			<p>Here is a list of all the books added by our users. Take a look... if you like something you can request a trade with the owner.</p>
 			<div class="dashboard-books">
 				<% for (var book in allUsersBooks) { %>
@@ -40,6 +43,7 @@
 				</div>
 				<% } %>
 			</div>
+			<% } %>
 		</div>
 	</div>
 
@@ -61,7 +65,8 @@
 		</div>
 	</div>
 	<script>
-		var allUsersBooks = <%- JSON.stringify(allUsersBooks) %>
+		var allUsersBooks = <%- JSON.stringify(allUsersBooks) %>;
+		var user = <%- JSON.stringify(user) %>;
 	</script>
 </body>
 </html> 
