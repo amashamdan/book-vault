@@ -236,13 +236,18 @@ body {
 }
 
 /* line 203, ../sass/screen.scss */
-.dashboard-books {
+.dashboard-books, .choice-books {
   display: flex;
   flex-wrap: wrap;
 }
 
 /* line 208, ../sass/screen.scss */
-.dashboard-book {
+.choice-books {
+  padding: 40px;
+}
+
+/* line 212, ../sass/screen.scss */
+.dashboard-book, .book-choice, .owner-choice {
   margin: 15px;
   width: 21%;
   text-align: center;
@@ -250,34 +255,39 @@ body {
   border: 1px solid white;
   border-radius: 10px;
 }
-/* line 215, ../sass/screen.scss */
-.dashboard-book img {
+/* line 219, ../sass/screen.scss */
+.dashboard-book img, .book-choice img, .owner-choice img {
   width: 128px;
   height: 172px;
 }
-/* line 219, ../sass/screen.scss */
-.dashboard-book button {
+/* line 223, ../sass/screen.scss */
+.dashboard-book button, .book-choice button, .owner-choice button {
   border: none;
   width: 80px;
   height: 22px;
   margin-bottom: 5px;
 }
-/* line 224, ../sass/screen.scss */
-.dashboard-book button:hover {
+/* line 228, ../sass/screen.scss */
+.dashboard-book button:hover, .book-choice button:hover, .owner-choice button:hover {
   cursor: pointer;
 }
-/* line 228, ../sass/screen.scss */
-.dashboard-book .delete-book {
+/* line 232, ../sass/screen.scss */
+.dashboard-book .delete-book, .book-choice .delete-book, .owner-choice .delete-book {
   background-color: #F05D5E;
   color: white;
 }
-/* line 232, ../sass/screen.scss */
-.dashboard-book .dashboard-more-info, .dashboard-book .trade {
+/* line 236, ../sass/screen.scss */
+.dashboard-book .dashboard-more-info, .dashboard-book .trade, .book-choice .dashboard-more-info, .book-choice .trade, .owner-choice .dashboard-more-info, .owner-choice .trade {
   background-color: white;
   color: #88A0A8;
 }
 
-/* line 238, ../sass/screen.scss */
+/* line 243, ../sass/screen.scss */
+.book-choice:hover, .owner-choice:hover {
+  cursor: pointer;
+}
+
+/* line 248, ../sass/screen.scss */
 .more-info {
   position: fixed;
   top: 100px;
@@ -291,38 +301,38 @@ body {
   overflow-y: auto;
 }
 
-/* line 251, ../sass/screen.scss */
+/* line 261, ../sass/screen.scss */
 .you-own-it-button {
   background-color: #0F7173;
   color: white;
 }
 
-/* line 256, ../sass/screen.scss */
+/* line 266, ../sass/screen.scss */
 .error-message-div {
   text-align: center;
 }
 
-/* line 260, ../sass/screen.scss */
+/* line 270, ../sass/screen.scss */
 .footer {
   color: #88A0A8;
   width: 100%;
   height: 90px;
   font-size: 0.8em;
 }
-/* line 265, ../sass/screen.scss */
+/* line 275, ../sass/screen.scss */
 .footer ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-/* line 271, ../sass/screen.scss */
+/* line 281, ../sass/screen.scss */
 .footer a {
   color: #88A0A8;
 }
 
 @media screen and (max-width: 600px) {
-  /* line 277, ../sass/screen.scss */
+  /* line 287, ../sass/screen.scss */
   .footer {
     height: 90px;
   }

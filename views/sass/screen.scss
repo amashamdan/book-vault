@@ -200,12 +200,16 @@ body {
 	text-align: center;
 }
 
-.dashboard-books {
+.dashboard-books, .choice-books {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.dashboard-book {
+.choice-books {
+	padding: 40px;
+}
+
+.dashboard-book, .book-choice, .owner-choice {
 	margin: 15px;
 	width: 21%;
 	text-align: center;
@@ -232,6 +236,12 @@ body {
 	.dashboard-more-info, .trade {
 		background-color: $generic-button-bk-color;
 		color: $generic-button-font-color;
+	}
+}
+
+.book-choice, .owner-choice {
+	&:hover {
+		cursor: pointer;
 	}
 }
 
