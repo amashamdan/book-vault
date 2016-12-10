@@ -256,14 +256,22 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.get("/all", function(req, res) {
-			books.find({}).toArray(function(err, results) {
-				if (err) {
-					res.end("Error in database");
-				} else {
-					var allUsersBooks = results;
-					res.render("all.ejs", {user: req.session.user, allUsersBooks: allUsersBooks});
-				}
-			});
+			if (req.session.user) {
+				// needed to make sure 'You own it' appears when user goes to all books. Otherwise newly added books will have "trade" button.
+				users.find({"email": req.session.user.email}).toArray(function(err, result) {
+					req.session.user = result[0];
+					books.find({}).toArray(function(err, results) {
+						if (err) {
+							res.end("Error in database");
+						} else {
+							var allUsersBooks = results;
+							res.render("all.ejs", {user: req.session.user, allUsersBooks: allUsersBooks});
+						}
+					});					
+				});
+			} else {
+				res.redirect("/");
+			}
 		})
 	}
 });
