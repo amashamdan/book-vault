@@ -195,7 +195,7 @@ body {
 	overflow: hidden;
 }
 
-.wait-message {
+.wait-message, .no-books-message {
 	margin: 50px;
 	text-align: center;
 }
@@ -251,6 +251,10 @@ body {
 .you-own-it-button {
 	background-color: $add-bk-color;
 	color: $add-font-color;
+}
+
+.error-message-div {
+	text-align: center;
 }
 
 .footer {
