@@ -23,7 +23,6 @@ $(document).ready(function() {
 					} else {
 						var limit = 10;
 					}
-					console.log(results);
 					for (var i = 0; i < limit; i++) {
 						var title = results.items[i].volumeInfo.title;
 						if (results.items[i].volumeInfo.subtitle) {
