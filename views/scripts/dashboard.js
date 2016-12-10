@@ -16,6 +16,7 @@ $(document).ready(function() {
 			success: function(results) {
 				if (results.totalItems == 0) {
 					alert("No results found.");
+					$("#search-results").fadeOut();
 				} else {
 					$("#search-results").children().remove();
 					if (results.items.length < 10) {
@@ -61,6 +62,7 @@ $(document).ready(function() {
 						e.preventDefault();
 						$("#search-results").fadeOut();
 						$("#search-results").children().remove();
+						$("body").removeClass("stop-scrolling");
 					});
 
 					$(".more-info").click(function(e) {
