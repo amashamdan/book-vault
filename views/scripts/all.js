@@ -40,7 +40,8 @@ $(document).ready(function() {
 				$(".more-info").slideUp();
 			});
 		} else {
-			var otherUserBook = $(this).siblings("input").attr("value");
+			var otherUserBookIsbn = $(this).siblings("input").attr("value");
+			var otherUserBookTitle = $(this).siblings("p").html();
 			$(".more-info").children().remove();
 			$(".more-info").append('<button class="cancel-button">Cancel</button><div class="choice-books"><p style="width: 100%;">Which one of YOUR books you would like to trade?</p></div>');
 			var options = [];
@@ -64,11 +65,12 @@ $(document).ready(function() {
 				$("body").removeClass("stop-scrolling");
 			});
 			$(".book-choice").click(function() {
-				var selectedBook = $(this).children("input").attr("value");
+				var selectedBookIsbn = $(this).children("input").attr("value");
+				var selectedBookTitle = $(this).children("p").html();
 				$(".more-info").fadeOut();
 				$.ajax({
 					type: "GET",
-					url: "/bookOwners/" + otherUserBook,
+					url: "/bookOwners/" + otherUserBookIsbn,
 					success: function(owners) {
 						$(".choice-books").children().remove();
 						$(".choice-books").append('<p>The following Vaulters own the book you are requesting. Select the owner you want to trade with.</p>');
@@ -76,7 +78,7 @@ $(document).ready(function() {
 							$(".choice-books").append(
 								'<div class="owner-choice">' +
 								'<input type="hidden" value="' + owners[owner].email + '">' +
-								'<p>' + owners[owner].name + '</p>' +
+								'<p class="otherName">' + owners[owner].name + '</p>' +
 								'<p>' + owners[owner].address + '</p>' +
 								'<p>' + owners[owner].city + '</p>' +
 								'<p>' + owners[owner].state +  '</p>' +
@@ -85,11 +87,13 @@ $(document).ready(function() {
 						}
 						$(".more-info").fadeIn();
 						$(".owner-choice").click(function() {
-							var owner = $(this).children("input").attr("value");
+							var ownerEmail = $(this).children("input").attr("value");
+							var ownerName = $(this).children(".otherName").html();
+
 							$.ajax({
 								url: "/request",
 								type: "POST",
-								data: {_csrf: csrfToken, owner: owner, otherUserBook: otherUserBook, selectedBook: selectedBook},
+								data: {_csrf: csrfToken, ownerEmail: ownerEmail, ownerName: ownerName, otherUserBookIsbn: otherUserBookIsbn, otherUserBookTitle: otherUserBookTitle, selectedBookIsbn: selectedBookIsbn, selectedBookTitle: selectedBookTitle},
 								statusCode: {
 									201: trade201,
 									404: trade404
