@@ -178,52 +178,19 @@ MongoClient.connect(mongoUrl, function(err, db) {
 						var isbns = result[0].books;
 						var userBooks = [];
 						var booksPulled = false;
-						var incomingOtherUsersPulled = false;
+						/*var incomingOtherUsersPulled = false;
 						var outgoingOtherUsersPulled = false;
 						var otherUsersIncoming = [];
-						var otherUsersOutgoing = [];
+						var otherUsersOutgoing = [];*/
 
 						for (var isbn in isbns) {
 							books.find({"isbn": isbns[isbn]}).toArray(function(err, bookResult) {
 								userBooks.push(bookResult[0]);
 								if (userBooks.length == isbns.length) {
-									booksPulled = true;
-									checkDataCompletion(req, res, req.session.user, userBooks, booksPulled, incomingOtherUsersPulled, outgoingOtherUsersPulled, otherUsersIncoming, otherUsersOutgoing);
+									res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": userBooks});
 								}
 							})
 						}
-
-						if (req.session.user.incomingRequests.length == 0) {
-							incomingOtherUsersPulled = true;
-							checkDataCompletion(req, res, req.session.user, userBooks, booksPulled, incomingOtherUsersPulled, outgoingOtherUsersPulled, otherUsersIncoming, otherUsersOutgoing);
-						} else {
-							for (var request in req.session.user.incomingRequests) {
-								users.find({"email": req.session.user.incomingRequests.otherUser}).toArray(function(err, result) {
-									otherUsersIncoming.push(result[0]);
-									if (otherUsersIncoming.length == req.session.user.incomingRequests.length) {
-										incomingOtherUsersPulled = true;
-										checkDataCompletion(req, res, req.session.user, userBooks, booksPulled, incomingOtherUsersPulled, outgoingOtherUsersPulled, otherUsersIncoming, otherUsersOutgoing);
-									}
-								})
-							}
-						}
-
-						if (req.session.user.outgoingRequests.length == 0) {
-							outgoingOtherUsersPulled = true;
-							checkDataCompletion(req, res, req.session.user, userBooks, booksPulled, incomingOtherUsersPulled, outgoingOtherUsersPulled, otherUsersIncoming, otherUsersOutgoing);
-						} else {
-							for (var request in req.session.user.outgoingRequests) {
-								users.find({"email": req.session.user.outgoingRequests.otherUser}).toArray(function(err, result) {
-									otherUsersOutgoing.push(result[0]);
-									if (otherUsersOutgoing.length == req.session.user.outgoingRequests.length) {
-										outgoingOtherUsersPulled = true;
-										checkDataCompletion(req, res, req.session.user, userBooks, booksPulled, incomingOtherUsersPulled, outgoingOtherUsersPulled, otherUsersIncoming, otherUsersOutgoing);
-									}
-								})
-							}
-						}
-
-
 					}
 				}
 			})
@@ -327,23 +294,17 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		app.post("/request", parser, function(req, res) {
 			users.update(
 				{"email": req.session.user.email},
-				{"$push": {"outgoingRequests": {"outGoingBook": req.body.selectedBook, "incomingBook": req.body.otherUserBook, "otherUser": req.body.owner, "status": "Pending"}}}
+				{"$push": {"outgoingRequests": {"outGoingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "incomingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "otherUser": {"email": req.body.ownerEmail, "name": req.body.ownerName}, "status": "Pending"}}}
 			);
 			users.update(
-				{"email": req.body.owner},
-				{"$push": {"incomingRequests": {"outGoingBook": req.body.otherUserBook, "incomingBook": req.body.selectedBook, "otherUser": req.session.user.email, "status": "Pending"}}}
+				{"email": req.body.ownerEmail},
+				{"$push": {"incomingRequests": {"outGoingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "incomingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "otherUser": {"email": req.session.user.email, "name": req.session.user.name}, "status": "Pending"}}}
 			);
 			res.status(201);
 			res.end();
 		});
 	}
 });
-
-function checkDataCompletion(req, res, user, userBooks, booksPulled, incomingOtherUsersPulled, outgoingOtherUsersPulled, otherUsersIncoming, otherUsersOutgoing) {
-	if (booksPulled == true && incomingOtherUsersPulled == true && outgoingOtherUsersPulled == true) {
-		res.render("dashboard.ejs", {"user": user, "csrfToken": req.csrfToken(), "userBooks": userBooks, "otherUsersIncoming": otherUsersIncoming, "otherUsersOutgoing": otherUsersOutgoing});
-	}
-}
 
 var port = Number(process.env.PORT || 8080);
 app.listen(port);	
