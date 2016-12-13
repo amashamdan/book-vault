@@ -294,14 +294,42 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		app.post("/request", parser, function(req, res) {
 			users.update(
 				{"email": req.session.user.email},
-				{"$push": {"outgoingRequests": {"outGoingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "incomingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "otherUser": {"email": req.body.ownerEmail, "name": req.body.ownerName}, "status": "Pending"}}}
+				{"$push": {"outgoingRequests": {"requestID": req.body.selectedBookIsbn + req.body.otherUserBookIsbn, "outGoingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "incomingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "otherUser": {"email": req.body.ownerEmail, "name": req.body.ownerName}, "status": "Pending"}}}
 			);
 			users.update(
 				{"email": req.body.ownerEmail},
-				{"$push": {"incomingRequests": {"outGoingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "incomingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "otherUser": {"email": req.session.user.email, "name": req.session.user.name}, "status": "Pending"}}}
+				{"$push": {"incomingRequests": {"requestID": req.body.selectedBookIsbn + req.body.otherUserBookIsbn, "outGoingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "incomingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "otherUser": {"email": req.session.user.email, "name": req.session.user.name}, "status": "Pending"}}}
 			);
 			res.status(201);
 			res.end();
+		});
+
+		app.post("/cancel-request", parser, function(req, res) {
+			var user1Updated = false;
+			var user2Updated = false;
+			users.update(
+				{"email": req.session.user.email},
+				{"$pull": {"outgoingRequests": {"requestID": req.body.requestID}}},
+				function() {
+					user1Updated = true;
+					if (user1Updated && user2Updated) {
+						res.status(200);
+						res.end();
+					}
+				}
+			);
+
+			users.update(
+				{"email": req.body.otherUser},
+				{"$pull": {"incomingRequests": {"requestID": req.body.requestID}}},
+				function() {
+					user2Updated = true;
+					if (user1Updated && user2Updated) {
+						res.status(200);
+						res.end();
+					}
+				}
+			);
 		});
 	}
 });
