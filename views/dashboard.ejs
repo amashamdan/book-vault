@@ -44,8 +44,54 @@
 
 	<div class="start">
 		<div class="container">
-			<p>Incoming trading requests:</p>
-			<p>Outgoing trading requests:</p>
+			<h4 class="requests-section-header">Incoming trading requests:</h4>
+			<% if (user.incomingRequests.length == 0) { %>
+			<p>You have no incoming requests... Maybe your books are boring! Shake your vault up and add some interesting books.</p>
+			<% } else { %>
+			<div class="requests-div">
+				<% for (var request in user.incomingRequests) { %>
+				<div class="dashboard-book">
+					<% if (user.incomingRequests[request].status == "Pending") { %>
+					<p class="pending">Request pending</p>
+					<button class="approve-request">Approve</button>
+					<button class="decline-request">Decline</button>
+					<% } else if (user.incomingRequests[request].status == "Approved") { %>
+					<p class="approved">Request Approved</p>
+					<% } else if (user.incomingRequests[request].status == "Denied") { %>
+					<p class="denied">Request Denied</p>
+					<% } %>
+					<p><strong>Requested book:</strong> <i><%= user.incomingRequests[request].outGoingBook.title %></i></p>
+					<p><strong>Requested by:</strong> <i><%= user.incomingRequests[request].otherUser.name %></i></p>
+					<p><strong>Trade with: </strong><i><%= user.incomingRequests[request].incomingBook.title %></i></p>
+				</div>
+				<% } %>
+			</div>
+			<% } %>
+			<hr/ style="margin: 10px 0 10px 0;">
+			<h4 class="requests-section-header">Outgoing trading requests:</h4>
+			<% if (user.outgoingRequests.length == 0) { %>
+			<p>You have no outgoing requests... Maybe you don't like reading books as much as you thought! Prove us wrong and request a trade.</p>
+			<% } else { %>
+			<div class="requests-div">
+				<% for (var request in user.outgoingRequests) { %>
+				<div class="dashboard-book">
+					<input type="hidden" id="requestID" value=<%= user.outgoingRequests[request].requestID %>>
+					<input type="hidden" id="otherUser" value=<%= user.outgoingRequests[request].otherUser.email %>>
+					<% if (user.outgoingRequests[request].status == "Pending") { %>
+					<p class="pending">Request pending</p>
+					<button class="cancel-request">Cancel request</button>
+					<% } else if (user.outgoingRequests[request].status == "Approved") { %>
+					<p class="approved">Request Approved</p>
+					<% } else if (user.outgoingRequests[request].status == "Denied") { %>
+					<p class="denied">Request Denied</p>
+					<% } %>
+					<p><strong>Requested book:</strong> <i><%= user.outgoingRequests[request].incomingBook.title %></i></p>
+					<p><strong>Requested from:</strong> <i><%= user.outgoingRequests[request].otherUser.name %></i></p>
+					<p><strong>Trade with: </strong><i><%= user.outgoingRequests[request].outGoingBook.title %></i></p>
+				</div>
+				<% } %>
+			</div>
+			<% } %>
 		</div>
 	</div>
 
