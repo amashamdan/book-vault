@@ -12,7 +12,8 @@ $cancel-bk-color: #F05D5E;
 $cancel-font-color: white;
 $add-bk-color: #0F7173;
 $add-font-color: white;
-
+$pending-bk-color: #FA824C;
+$pending-font-color: white;
 
 * {
 	margin: 0;
@@ -265,6 +266,55 @@ body {
 
 .error-message-div {
 	text-align: center;
+}
+
+.cancel-request {
+	width: 100% !important;
+	color: $cancel-font-color;
+	background-color: $cancel-bk-color;
+}
+
+.approve-request {
+	color: $add-font-color;
+	background-color: $add-bk-color;
+}
+
+.decline-request {
+	color: $cancel-font-color;
+	background-color: $cancel-bk-color;
+}
+
+@mixin status {
+	padding: 5px;
+	border-radius: 10px;
+	margin-bottom: 5px;	
+}
+
+.pending {
+	@include status;
+	background-color: $pending-bk-color;
+	color: $pending-font-color;
+}
+
+.approved {
+	@include status;
+	background-color: $add-bk-color;
+	color: $add-font-color;
+}
+
+.denied {
+	@include status;
+	background-color: $cancel-bk-color;
+	color: $cancel-font-color;
+}
+
+.requests-div {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.requests-section-header {
+	margin-bottom: 10px;
 }
 
 .footer {
