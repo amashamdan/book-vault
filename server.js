@@ -37,6 +37,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 	} else {
 		var users = db.collection("users");
 		var books = db.collection("shelf");
+		var requests = db.collection("requests");
 		var passwordUpdateMessage = undefined;
 
 
@@ -178,10 +179,6 @@ MongoClient.connect(mongoUrl, function(err, db) {
 						var isbns = result[0].books;
 						var userBooks = [];
 						var booksPulled = false;
-						/*var incomingOtherUsersPulled = false;
-						var outgoingOtherUsersPulled = false;
-						var otherUsersIncoming = [];
-						var otherUsersOutgoing = [];*/
 
 						for (var isbn in isbns) {
 							books.find({"isbn": isbns[isbn]}).toArray(function(err, bookResult) {
@@ -292,6 +289,48 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.post("/request", parser, function(req, res) {
+			var user1Updated = false;
+			var user2Updated = false;
+			var requestsUpdated = false;
+			var requestID = req.body.selectedBookIsbn + req.body.otherUserBookIsbn
+
+			users.update(
+				{"email": req.session.user.email},
+				{"$push": {"outgoingRequests": requestID}},
+				function() {
+					user1Updated = true;
+					isResponseReady();
+				}
+			)
+
+			users.update(
+				{"email": req.body.ownerEmail},
+				{"$push": {"incomingRequests": requestID}},
+				function() {
+					user2Updated = true;
+					isResponseReady();
+				}
+			)
+
+			requests.insert({
+				"requestID": requestID,
+				"requestedBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle},
+				"tradedBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle},
+				"requestedBy": {"name": req.session.user.name, "email": req.session.user.email},
+				"requestedFrom": {"name": req.body.ownerName, "email": req.body.ownerEmail}
+			}, function () {
+				requestsUpdated = true;
+				isResponseReady();
+			});
+
+			function isResponseReady() {
+				if (user1Updated && user2Updated && requestsUpdated) {
+					res.status(201);
+					res.end();
+				}
+			}
+
+			/*
 			users.update(
 				{"email": req.session.user.email},
 				{"$push": {"outgoingRequests": {"requestID": req.body.selectedBookIsbn + req.body.otherUserBookIsbn, "outGoingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "incomingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "otherUser": {"email": req.body.ownerEmail, "name": req.body.ownerName}, "status": "Pending"}}}
@@ -301,7 +340,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				{"$push": {"incomingRequests": {"requestID": req.body.selectedBookIsbn + req.body.otherUserBookIsbn, "outGoingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "incomingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "otherUser": {"email": req.session.user.email, "name": req.session.user.name}, "status": "Pending"}}}
 			);
 			res.status(201);
-			res.end();
+			res.end();*/
 		});
 
 		app.post("/cancel-request", parser, function(req, res) {
