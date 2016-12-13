@@ -111,10 +111,26 @@ $(document).ready(function() {
 			data: {_csrf: csrfToken, isbn: isbn},
 			statusCode: {
 				201: delete201,
-				404: delete404 
+				404: add404 
 			}
 		})
 	})
+
+	$(".cancel-request").click(function() {
+		var requestID = $(this).siblings("#requestID").attr("value");
+		var otherUser = $(this).siblings("#otherUser").attr("value");
+		if (confirm("Are you sure you want to cancel the request?")) {
+			$.ajax({
+				url: "/cancel-request",
+				type: "POST",
+				data: {"_csrf": csrfToken, "requestID": requestID, "otherUser": otherUser},
+				statusCode: {
+					200: delete201,
+					404: add404
+				}
+			});
+		}
+	});
 });
 
 function add200() {
@@ -133,9 +149,4 @@ function add404() {
 
 function delete201() {
 	location.reload();
-}
-
-
-function delete404() {
-	alert("An error occured.");
 }
