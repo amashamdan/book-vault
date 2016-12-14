@@ -60,6 +60,8 @@
 					<button class="request-action decline-request" value="decline">Decline</button>
 					<% } else if (userRequests[request].status == "Approved") { %>
 					<p class="approved">Request Approved</p>
+					<button class="address-button"><%= userRequests[request].requestedBy.name %>'s address</button>
+					<a href="mailto:<%= userRequests[request].requestedBy.email %>"><button class="email-button">Email <%= userRequests[request].requestedBy.name %></button></a>
 					<% } else if (userRequests[request].status == "Declined") { %>
 					<p class="denied">Request Declined</p>
 					<% } %>
@@ -89,6 +91,8 @@
 					<button class="request-action cancel-request" value="cancel">Cancel request</button>
 					<% } else if (userRequests[request].status == "Approved") { %>
 					<p class="approved">Request Approved</p>
+					<button class="address-button"><%= userRequests[request].requestedFrom.name %>'s address</button>
+					<a href="mailto:<%= userRequests[request].requestedFrom.email %>"><button class="email-button">Email <%= userRequests[request].requestedFrom.name %></button></a>
 					<% } else if (userRequests[request].status == "Declined") { %>
 					<p class="denied">Request Declined</p>
 					<% } %>
@@ -125,6 +129,9 @@
 	</div>
 
 	<div id="search-results">
+	</div>
+
+	<div class="address-div">
 	</div>
 
 	<div class="footer">
