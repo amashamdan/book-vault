@@ -52,14 +52,16 @@
 				<% for (var request in userRequests) { %>
 				<% if (userRequests[request].requestedFrom.email == user.email) { %>
 				<div class="dashboard-book">
+					<input type="hidden" id="requestID" value=<%= userRequests[request].requestID %>>
+					<input type="hidden" id="otherUser" value=<%= userRequests[request].requestedFrom.email %>>
 					<% if (userRequests[request].status == "Pending") { %>
 					<p class="pending">Request pending</p>
-					<button class="approve-request">Approve</button>
-					<button class="decline-request">Decline</button>
+					<button class="request-action approve-request" value="approve">Approve</button>
+					<button class="request-action decline-request" value="decline">Decline</button>
 					<% } else if (userRequests[request].status == "Approved") { %>
 					<p class="approved">Request Approved</p>
-					<% } else if (userRequests[request].status == "Denied") { %>
-					<p class="denied">Request Denied</p>
+					<% } else if (userRequests[request].status == "Declined") { %>
+					<p class="denied">Request Declined</p>
 					<% } %>
 					<p><strong>Requested book:</strong> <i><%= userRequests[request].requestedBook.title %></i></p>
 					<p><strong>Requested by:</strong> <i><%= userRequests[request].requestedBy.name %></i></p>
@@ -84,11 +86,11 @@
 					<input type="hidden" id="otherUser" value=<%= userRequests[request].requestedFrom.email %>>
 					<% if (userRequests[request].status == "Pending") { %>
 					<p class="pending">Request pending</p>
-					<button class="cancel-request">Cancel request</button>
+					<button class="request-action cancel-request" value="cancel">Cancel request</button>
 					<% } else if (userRequests[request].status == "Approved") { %>
 					<p class="approved">Request Approved</p>
-					<% } else if (userRequests[request].status == "Denied") { %>
-					<p class="denied">Request Denied</p>
+					<% } else if (userRequests[request].status == "Declined") { %>
+					<p class="denied">Request Declined</p>
 					<% } %>
 					<p><strong>Requested book:</strong> <i><%= userRequests[request].requestedBook.title %></i></p>
 					<p><strong>Requested from:</strong> <i><%= userRequests[request].requestedFrom.name %></i></p>
