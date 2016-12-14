@@ -116,16 +116,16 @@ $(document).ready(function() {
 		})
 	})
 
-	$(".cancel-request").click(function() {
+	$(".request-action").click(function() {
 		var requestID = $(this).siblings("#requestID").attr("value");
 		var otherUser = $(this).siblings("#otherUser").attr("value");
-		if (confirm("Are you sure you want to cancel the request?")) {
+		if (confirm("Are you sure you want to " + $(this).attr("value") + " the request?")) {
 			$.ajax({
-				url: "/cancel-request",
+				url: "/action/" + $(this).attr("value"),
 				type: "POST",
 				data: {"_csrf": csrfToken, "requestID": requestID, "otherUser": otherUser},
 				statusCode: {
-					200: delete201,
+					200: request200,
 					404: add404
 				}
 			});
@@ -147,6 +147,6 @@ function add404() {
 	alert("An error occured.");
 }
 
-function delete201() {
+function request200() {
 	location.reload();
 }
