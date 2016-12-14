@@ -274,6 +274,12 @@ body {
 	background-color: $cancel-bk-color;
 }
 
+.address-button, .email-button {
+	width: 100% !important;
+	background-color: $generic-button-bk-color;
+	color: $generic-button-font-color;
+}
+
 .approve-request {
 	color: $add-font-color;
 	background-color: $add-bk-color;
@@ -315,6 +321,19 @@ body {
 
 .requests-section-header {
 	margin-bottom: 10px;
+}
+
+.address-div {
+	display: none;
+	position: fixed;
+	top: 300px;
+	left: 300px;
+	width: calc(100% - 600px);
+	height: calc(100% - 600px);
+	background-color: $search-div-bk-color;
+	color: $search-div-font-color;
+	padding: 20px;
+	text-align: center;
 }
 
 .footer {
