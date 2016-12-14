@@ -127,6 +127,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			if (req.session.user) {
 				users.find({"email": req.session.user.email}).toArray(function(err, result) {
 					req.session.user = result[0];
+					delete req.session.user.password;
 					res.render("profile.ejs", {"csrfToken": req.csrfToken(), user: req.session.user, "passwordUpdateMessage": passwordUpdateMessage});
 					passwordUpdateMessage = undefined;
 				});
@@ -173,6 +174,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				} else {
 					// Update information in req.session.user
 					req.session.user = result[0];
+					delete req.session.user.password;
 					if (result[0].books.length == 0) {
 						res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": undefined});
 					} else {
@@ -310,6 +312,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				// needed to make sure 'You own it' appears when user goes to all books. Otherwise newly added books will have "trade" button.
 				users.find({"email": req.session.user.email}).toArray(function(err, result) {
 					req.session.user = result[0];
+					delete req.session.user.password;
 					books.find({}).toArray(function(err, results) {
 						if (err) {
 							res.end("Error in database");
@@ -326,6 +329,9 @@ MongoClient.connect(mongoUrl, function(err, db) {
 
 		app.get("/bookOwners/:selectedBook", function(req, res) {
 			users.find({"books": req.params.selectedBook}).toArray(function(err, owners) {
+				for (var owner in owners) {
+					delete owners[owner].password;
+				}
 				res.send(owners);
 				res.end();
 			})
@@ -440,6 +446,12 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			}
 		});
 
+		app.get("/user/:email", function(req, res) {
+			users.find({"email": req.params.email}).toArray(function(err, result) {
+				res.send({"address": result[0].address, "city": result[0].city, "state": result[0].state, "zip": result[0].zip});
+				res.end();
+			});
+		});
 	}
 });
 
