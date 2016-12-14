@@ -178,19 +178,59 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					} else {
 						var isbns = result[0].books;
 						var userBooks = [];
+						var userRequests = [];
 						var booksPulled = false;
+						var incomingRequestsPulled = false;
+						var outgoingRequestsPulled = false;
 
 						for (var isbn in isbns) {
 							books.find({"isbn": isbns[isbn]}).toArray(function(err, bookResult) {
 								userBooks.push(bookResult[0]);
 								if (userBooks.length == isbns.length) {
-									res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": userBooks});
+									booksPulled = true;
+									allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
 								}
 							})
+						}
+
+						if (result[0].incomingRequests.length == 0) {
+							incomingRequestsPulled = true;
+							allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
+						} else {
+							for (var item in result[0].incomingRequests) {
+								requests.find({"requestID": result[0].incomingRequests[item]}).toArray(function(err, request) {
+									userRequests.push(request[0]);
+									if (userRequests.length == result[0].incomingRequests.length) {
+										incomingRequestsPulled = true;
+										allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
+									}
+								});
+							}
+						}
+
+						if (result[0].outgoingRequests.length == 0) {
+							outgoingRequestsPulled = true;
+							allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);	
+						} else {
+							for (var item in result[0].outgoingRequests) {
+								requests.find({"requestID": result[0].outgoingRequests[item]}).toArray(function(err, request) {
+									userRequests.push(request[0]);
+									if (userRequests.length == result[0].outgoingRequests.length) {
+										outgoingRequestsPulled = true;
+										allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
+									}
+								});
+							}
 						}
 					}
 				}
 			})
+
+			function allDataPulled (booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests) {
+				if (booksPulled && incomingRequestsPulled && outgoingRequestsPulled) {
+					res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": userBooks, "userRequests": userRequests});
+				}
+			}
 		});
 
 		app.post("/addbook", parser, function(req, res) {
@@ -317,7 +357,8 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				"requestedBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle},
 				"tradedBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle},
 				"requestedBy": {"name": req.session.user.name, "email": req.session.user.email},
-				"requestedFrom": {"name": req.body.ownerName, "email": req.body.ownerEmail}
+				"requestedFrom": {"name": req.body.ownerName, "email": req.body.ownerEmail},
+				"status": "Pending"
 			}, function () {
 				requestsUpdated = true;
 				isResponseReady();
