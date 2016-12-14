@@ -131,6 +131,28 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	$(".address-button").click(function() {
+		var otherUser = $(this).siblings("#otherUser").attr("value");
+		$.ajax({
+			url: "/user/" + otherUser,
+			type: "GET",
+			success: function(data) {
+				$(".address-div").append(
+					'<p>' + data.address + '</p>' +
+					'<p>' + data.city + ', ' + data.state + ' ' + + data.zip + '</p>' +
+					'<button class="cancel-button" id="address-close">Close</button>'
+				);
+				$(".address-div").slideDown();
+				$("#address-close").click(function() {
+					$(".address-div").slideUp();
+				})
+			},
+			error: function(err) {
+				alert(err);
+			}
+		})
+	});
 });
 
 function add200() {
