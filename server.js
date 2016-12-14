@@ -387,43 +387,59 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			res.end();*/
 		});
 
-		app.post("/cancel-request", parser, function(req, res) {
-			var user1Updated = false;
-			var user2Updated = false;
-			var requestsUpdated = false;
+		app.post("/action/:type", parser, function(req, res) {
+			if (req.params.type == "cancel") {
+				var user1Updated = false;
+				var user2Updated = false;
+				var requestsUpdated = false;
 
-			users.update(
-				{"email": req.session.user.email},
-				{"$pull": {"outgoingRequests": req.body.requestID}},
-				function() {
-					user1Updated = true;
+				users.update(
+					{"email": req.session.user.email},
+					{"$pull": {"outgoingRequests": req.body.requestID}},
+					function() {
+						user1Updated = true;
+						if (user1Updated && user2Updated) {
+							res.status(200);
+							res.end();
+						}
+					}
+				);
+
+				users.update(
+					{"email": req.body.otherUser},
+					{"$pull": {"incomingRequests": req.body.requestID}},
+					function() {
+						user2Updated = true;
+						if (user1Updated && user2Updated) {
+							res.status(200);
+							res.end();
+						}
+					}
+				);
+
+				requests.remove({"requestID": req.body.requestID}, function() {
+					requestsUpdated = true;
 					if (user1Updated && user2Updated) {
 						res.status(200);
 						res.end();
 					}
-				}
-			);
-
-			users.update(
-				{"email": req.body.otherUser},
-				{"$pull": {"incomingRequests": req.body.requestID}},
-				function() {
-					user2Updated = true;
-					if (user1Updated && user2Updated) {
+				})
+			} else if (req.params.type == "approve" || req.params.type == "decline") {
+				var status = req.params.type.replace(/[a-z]/, function(match) {
+					return match.toUpperCase();
+				});
+				status += "d";
+				requests.update(
+					{"requestID": req.body.requestID},
+					{"$set": {"status": status}},
+					function() {
 						res.status(200);
 						res.end();
 					}
-				}
-			);
-
-			requests.remove({"requestID": req.body.requestID}, function() {
-				requestsUpdated = true;
-				if (user1Updated && user2Updated) {
-					res.status(200);
-					res.end();
-				}
-			})
+				);
+			}
 		});
+
 	}
 });
 
