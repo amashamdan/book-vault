@@ -387,9 +387,11 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		app.post("/cancel-request", parser, function(req, res) {
 			var user1Updated = false;
 			var user2Updated = false;
+			var requestsUpdated = false;
+
 			users.update(
 				{"email": req.session.user.email},
-				{"$pull": {"outgoingRequests": {"requestID": req.body.requestID}}},
+				{"$pull": {"outgoingRequests": req.body.requestID}},
 				function() {
 					user1Updated = true;
 					if (user1Updated && user2Updated) {
@@ -401,7 +403,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 
 			users.update(
 				{"email": req.body.otherUser},
-				{"$pull": {"incomingRequests": {"requestID": req.body.requestID}}},
+				{"$pull": {"incomingRequests": req.body.requestID}},
 				function() {
 					user2Updated = true;
 					if (user1Updated && user2Updated) {
@@ -410,6 +412,14 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					}
 				}
 			);
+
+			requests.remove({"requestID": req.body.requestID}, function() {
+				requestsUpdated = true;
+				if (user1Updated && user2Updated) {
+					res.status(200);
+					res.end();
+				}
+			})
 		});
 	}
 });
