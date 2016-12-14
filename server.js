@@ -200,8 +200,10 @@ MongoClient.connect(mongoUrl, function(err, db) {
 							for (var item in result[0].incomingRequests) {
 								requests.find({"requestID": result[0].incomingRequests[item]}).toArray(function(err, request) {
 									userRequests.push(request[0]);
-									if (userRequests.length == result[0].incomingRequests.length) {
+									// requests.length must equal the sum of incoming and outgoing requests.
+									if (userRequests.length == result[0].incomingRequests.length + result[0].outgoingRequests.length) {
 										incomingRequestsPulled = true;
+										outgoingRequestsPulled = true;
 										allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
 									}
 								});
@@ -215,7 +217,8 @@ MongoClient.connect(mongoUrl, function(err, db) {
 							for (var item in result[0].outgoingRequests) {
 								requests.find({"requestID": result[0].outgoingRequests[item]}).toArray(function(err, request) {
 									userRequests.push(request[0]);
-									if (userRequests.length == result[0].outgoingRequests.length) {
+									if (userRequests.length == result[0].incomingRequests.length + result[0].outgoingRequests.length) {
+										incomingRequestsPulled = true;
 										outgoingRequestsPulled = true;
 										allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
 									}
