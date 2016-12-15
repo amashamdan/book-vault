@@ -1,7 +1,7 @@
-$section-bk-color: #88A0A8;
+$section-bk-color: #9C9583;
 $section-font-color: white;
 $generic-button-bk-color: white;
-$generic-button-font-color: #88A0A8;
+$generic-button-font-color: #9C9583;
 $error-message-font-color: #AE3C3C;
 $error-message-bk-color: #FFACAC;
 $success-message-font-color: #0B6E4F;
@@ -23,6 +23,7 @@ $pending-font-color: white;
 
 body {
 	font-family: 'Proza Libre', sans-serif;
+	font-size: 0.9em;
 }
 
 @mixin section {
@@ -69,9 +70,11 @@ body {
 
 .start {
 	@include section;
-	margin-bottom: 30px;
+	margin: 0 auto;
+	margin-bottom: 20px;
 	padding: 25px;
-	overflow-y: auto; 
+	width: 100%;
+	max-width: 1000px;
 }
 
 .button-wrapper {
@@ -87,7 +90,7 @@ body {
 	input {
 		width: 300px;
 		height: 30px;
-		font-size: 1.0em;
+		font-size: 0.9em;
 		padding-left: 5px;
 	}
 	button {
@@ -326,14 +329,19 @@ body {
 .address-div {
 	display: none;
 	position: fixed;
-	top: 300px;
-	left: 300px;
-	width: calc(100% - 600px);
-	height: calc(100% - 600px);
+	top: 35%;
+	left: 25%;
+	width: 50%;
+	height: 30%;
 	background-color: $search-div-bk-color;
 	color: $search-div-font-color;
 	padding: 20px;
 	text-align: center;
+}
+
+.fa {
+	color: white;
+	margin-left: 15px;
 }
 
 .footer {
@@ -350,10 +358,68 @@ body {
 	a {
 		color: $section-bk-color;
 	}
+	hr {
+		margin-bottom: 10px;
+	}
 }
 
 @media screen and (max-width: 600px) {
+	body {
+		font-size: 0.8em;
+	}
+	.dashboard-book, .book-choice, .owner-choice {
+		margin: 5px;
+		width: 45%;
+		font-size: 0.85em;
+		img {
+			width: 100px;
+			height: 134px;
+		}
+		button {
+			font-size: 0.9em;
+		}
+	}
+	.login-form {
+		input {
+			width: 250px;
+		}
+	}
+	.register-form {
+		input {
+			width: 250px;
+		}
+		.states-list {
+			width: 250px;
+		}
+	}
+	.info-wrapper {
+		width: 100%;
+		font-size: 0.9em;
+	}
+	.image-wrapper {
+		text-align: center;
+		width: 100%;
+	}
+	#add-book-form {
+		input {
+			width: 250px;
+		}
+	}
 	.footer {
-		height: 90px;
+		margin: 10px;
+	}
+	h1, h2 {
+		margin-left: 10px;
+	}
+	.addition {
+		button {
+			width: 80px;
+		}
+	}
+	.more-info {
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
 	}
 }

@@ -8,32 +8,33 @@
 /* line 24, ../sass/screen.scss */
 body {
   font-family: 'Proza Libre', sans-serif;
+  font-size: 0.9em;
 }
 
-/* line 45, ../sass/screen.scss */
+/* line 46, ../sass/screen.scss */
 .menu {
-  background-color: #88A0A8;
+  background-color: #9C9583;
   color: white;
   width: 100%;
   padding: 10px 0 10px 0;
   margin-bottom: 30px;
 }
 
-/* line 52, ../sass/screen.scss */
+/* line 53, ../sass/screen.scss */
 .container {
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
 }
 
-/* line 58, ../sass/screen.scss */
+/* line 59, ../sass/screen.scss */
 .flex-wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-/* line 64, ../sass/screen.scss */
+/* line 65, ../sass/screen.scss */
 .generic-button {
   width: 100px;
   height: 30px;
@@ -41,81 +42,83 @@ body {
   border: none;
   font-size: 0.8em;
   background-color: white;
-  color: #88A0A8;
+  color: #9C9583;
 }
-/* line 40, ../sass/screen.scss */
+/* line 41, ../sass/screen.scss */
 .generic-button:hover {
   cursor: pointer;
 }
 
-/* line 70, ../sass/screen.scss */
+/* line 71, ../sass/screen.scss */
 .start {
-  background-color: #88A0A8;
+  background-color: #9C9583;
   color: white;
-  margin-bottom: 30px;
+  margin: 0 auto;
+  margin-bottom: 20px;
   padding: 25px;
-  overflow-y: auto;
+  width: 100%;
+  max-width: 1000px;
 }
 
-/* line 77, ../sass/screen.scss */
+/* line 80, ../sass/screen.scss */
 .button-wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
-/* line 84, ../sass/screen.scss */
+/* line 87, ../sass/screen.scss */
 .login-form p {
   margin: 10px 0 5px 0;
 }
-/* line 87, ../sass/screen.scss */
+/* line 90, ../sass/screen.scss */
 .login-form input {
   width: 300px;
   height: 30px;
-  font-size: 1.0em;
+  font-size: 0.9em;
   padding-left: 5px;
 }
-/* line 93, ../sass/screen.scss */
+/* line 96, ../sass/screen.scss */
 .login-form button {
   margin: 20px 0 10px 0;
 }
 
-/* line 84, ../sass/screen.scss */
+/* line 87, ../sass/screen.scss */
 .register-form p {
   margin: 10px 0 5px 0;
 }
-/* line 87, ../sass/screen.scss */
+/* line 90, ../sass/screen.scss */
 .register-form input {
   width: 300px;
   height: 30px;
-  font-size: 1.0em;
+  font-size: 0.9em;
   padding-left: 5px;
 }
-/* line 93, ../sass/screen.scss */
+/* line 96, ../sass/screen.scss */
 .register-form button {
   margin: 20px 0 10px 0;
 }
 
-/* line 107, ../sass/screen.scss */
+/* line 110, ../sass/screen.scss */
 .update-form input {
   width: 220px;
   height: 25px;
   font-size: 0.8em;
   padding-left: 5px;
 }
-/* line 113, ../sass/screen.scss */
+/* line 116, ../sass/screen.scss */
 .update-form button {
   margin-top: 10px;
 }
 
-/* line 118, ../sass/screen.scss */
+/* line 121, ../sass/screen.scss */
 .states-list {
   width: 300px;
   height: 30px;
   font-size: 0.9em;
 }
 
-/* line 124, ../sass/screen.scss */
+/* line 127, ../sass/screen.scss */
 .error-message {
   color: #AE3C3C;
   background-color: #FFACAC;
@@ -125,7 +128,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* line 133, ../sass/screen.scss */
+/* line 136, ../sass/screen.scss */
 .success-message {
   border-radius: 3px;
   margin-bottom: 10px;
@@ -135,28 +138,28 @@ body {
   width: 600px;
 }
 
-/* line 142, ../sass/screen.scss */
+/* line 145, ../sass/screen.scss */
 .info-header {
   margin-top: 15px;
 }
 
-/* line 84, ../sass/screen.scss */
+/* line 87, ../sass/screen.scss */
 #add-book-form p {
   margin: 10px 0 5px 0;
 }
-/* line 87, ../sass/screen.scss */
+/* line 90, ../sass/screen.scss */
 #add-book-form input {
   width: 300px;
   height: 30px;
-  font-size: 1.0em;
+  font-size: 0.9em;
   padding-left: 5px;
 }
-/* line 93, ../sass/screen.scss */
+/* line 96, ../sass/screen.scss */
 #add-book-form button {
   margin: 20px 0 10px 0;
 }
 
-/* line 150, ../sass/screen.scss */
+/* line 153, ../sass/screen.scss */
 #search-results {
   position: fixed;
   top: 20px;
@@ -170,30 +173,30 @@ body {
   overflow-y: auto;
 }
 
-/* line 163, ../sass/screen.scss */
+/* line 166, ../sass/screen.scss */
 .result {
   margin: 40px;
 }
 
-/* line 167, ../sass/screen.scss */
+/* line 170, ../sass/screen.scss */
 .other-information {
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px;
 }
 
-/* line 173, ../sass/screen.scss */
+/* line 176, ../sass/screen.scss */
 .result-image {
   width: 128px;
 }
 
-/* line 177, ../sass/screen.scss */
+/* line 180, ../sass/screen.scss */
 .info-wrapper {
   margin-left: 10px;
   width: calc(100% - 138px);
 }
 
-/* line 182, ../sass/screen.scss */
+/* line 185, ../sass/screen.scss */
 .add-this-book {
   width: 100px;
   height: 30px;
@@ -203,12 +206,12 @@ body {
   background-color: #0F7173;
   color: white;
 }
-/* line 40, ../sass/screen.scss */
+/* line 41, ../sass/screen.scss */
 .add-this-book:hover {
   cursor: pointer;
 }
 
-/* line 188, ../sass/screen.scss */
+/* line 191, ../sass/screen.scss */
 .cancel-button {
   width: 100px;
   height: 30px;
@@ -218,35 +221,35 @@ body {
   background-color: #F05D5E;
   color: white;
 }
-/* line 40, ../sass/screen.scss */
+/* line 41, ../sass/screen.scss */
 .cancel-button:hover {
   cursor: pointer;
 }
 
-/* line 194, ../sass/screen.scss */
+/* line 197, ../sass/screen.scss */
 .stop-scrolling {
   height: 100%;
   overflow: hidden;
 }
 
-/* line 199, ../sass/screen.scss */
+/* line 202, ../sass/screen.scss */
 .wait-message, .no-books-message {
   margin: 50px;
   text-align: center;
 }
 
-/* line 204, ../sass/screen.scss */
+/* line 207, ../sass/screen.scss */
 .dashboard-books, .choice-books {
   display: flex;
   flex-wrap: wrap;
 }
 
-/* line 209, ../sass/screen.scss */
+/* line 212, ../sass/screen.scss */
 .choice-books {
   padding: 40px;
 }
 
-/* line 213, ../sass/screen.scss */
+/* line 216, ../sass/screen.scss */
 .dashboard-book, .book-choice, .owner-choice {
   margin: 15px;
   width: 21%;
@@ -255,39 +258,39 @@ body {
   border: 1px solid white;
   border-radius: 10px;
 }
-/* line 220, ../sass/screen.scss */
+/* line 223, ../sass/screen.scss */
 .dashboard-book img, .book-choice img, .owner-choice img {
   width: 128px;
   height: 172px;
 }
-/* line 224, ../sass/screen.scss */
+/* line 227, ../sass/screen.scss */
 .dashboard-book button, .book-choice button, .owner-choice button {
   border: none;
   width: 80px;
   height: 22px;
   margin-bottom: 5px;
 }
-/* line 229, ../sass/screen.scss */
+/* line 232, ../sass/screen.scss */
 .dashboard-book button:hover, .book-choice button:hover, .owner-choice button:hover {
   cursor: pointer;
 }
-/* line 233, ../sass/screen.scss */
+/* line 236, ../sass/screen.scss */
 .dashboard-book .delete-book, .book-choice .delete-book, .owner-choice .delete-book {
   background-color: #F05D5E;
   color: white;
 }
-/* line 237, ../sass/screen.scss */
+/* line 240, ../sass/screen.scss */
 .dashboard-book .dashboard-more-info, .dashboard-book .trade, .book-choice .dashboard-more-info, .book-choice .trade, .owner-choice .dashboard-more-info, .owner-choice .trade {
   background-color: white;
-  color: #88A0A8;
+  color: #9C9583;
 }
 
-/* line 244, ../sass/screen.scss */
+/* line 247, ../sass/screen.scss */
 .book-choice:hover, .owner-choice:hover {
   cursor: pointer;
 }
 
-/* line 249, ../sass/screen.scss */
+/* line 252, ../sass/screen.scss */
 .more-info {
   position: fixed;
   top: 100px;
@@ -301,44 +304,44 @@ body {
   overflow-y: auto;
 }
 
-/* line 262, ../sass/screen.scss */
+/* line 265, ../sass/screen.scss */
 .you-own-it-button {
   background-color: #0F7173;
   color: white;
 }
 
-/* line 267, ../sass/screen.scss */
+/* line 270, ../sass/screen.scss */
 .error-message-div {
   text-align: center;
 }
 
-/* line 271, ../sass/screen.scss */
+/* line 274, ../sass/screen.scss */
 .cancel-request {
   width: 100% !important;
   color: white;
   background-color: #F05D5E;
 }
 
-/* line 277, ../sass/screen.scss */
+/* line 280, ../sass/screen.scss */
 .address-button, .email-button {
   width: 100% !important;
   background-color: white;
-  color: #88A0A8;
+  color: #9C9583;
 }
 
-/* line 283, ../sass/screen.scss */
+/* line 286, ../sass/screen.scss */
 .approve-request {
   color: white;
   background-color: #0F7173;
 }
 
-/* line 288, ../sass/screen.scss */
+/* line 291, ../sass/screen.scss */
 .decline-request {
   color: white;
   background-color: #F05D5E;
 }
 
-/* line 299, ../sass/screen.scss */
+/* line 302, ../sass/screen.scss */
 .pending {
   padding: 5px;
   border-radius: 10px;
@@ -347,7 +350,7 @@ body {
   color: white;
 }
 
-/* line 305, ../sass/screen.scss */
+/* line 308, ../sass/screen.scss */
 .approved {
   padding: 5px;
   border-radius: 10px;
@@ -356,7 +359,7 @@ body {
   color: white;
 }
 
-/* line 311, ../sass/screen.scss */
+/* line 314, ../sass/screen.scss */
 .denied {
   padding: 5px;
   border-radius: 10px;
@@ -365,53 +368,133 @@ body {
   color: white;
 }
 
-/* line 317, ../sass/screen.scss */
+/* line 320, ../sass/screen.scss */
 .requests-div {
   display: flex;
   flex-wrap: wrap;
 }
 
-/* line 322, ../sass/screen.scss */
+/* line 325, ../sass/screen.scss */
 .requests-section-header {
   margin-bottom: 10px;
 }
 
-/* line 326, ../sass/screen.scss */
+/* line 329, ../sass/screen.scss */
 .address-div {
   display: none;
   position: fixed;
-  top: 300px;
-  left: 300px;
-  width: calc(100% - 600px);
-  height: calc(100% - 600px);
+  top: 35%;
+  left: 25%;
+  width: 50%;
+  height: 30%;
   background-color: black;
   color: white;
   padding: 20px;
   text-align: center;
 }
 
-/* line 339, ../sass/screen.scss */
+/* line 342, ../sass/screen.scss */
+.fa {
+  color: white;
+  margin-left: 15px;
+}
+
+/* line 347, ../sass/screen.scss */
 .footer {
-  color: #88A0A8;
+  color: #9C9583;
   width: 100%;
   height: 90px;
   font-size: 0.8em;
 }
-/* line 344, ../sass/screen.scss */
+/* line 352, ../sass/screen.scss */
 .footer ul {
   list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
 }
-/* line 350, ../sass/screen.scss */
+/* line 358, ../sass/screen.scss */
 .footer a {
-  color: #88A0A8;
+  color: #9C9583;
+}
+/* line 361, ../sass/screen.scss */
+.footer hr {
+  margin-bottom: 10px;
 }
 
 @media screen and (max-width: 600px) {
-  /* line 356, ../sass/screen.scss */
+  /* line 367, ../sass/screen.scss */
+  body {
+    font-size: 0.8em;
+  }
+
+  /* line 370, ../sass/screen.scss */
+  .dashboard-book, .book-choice, .owner-choice {
+    margin: 5px;
+    width: 45%;
+    font-size: 0.85em;
+  }
+  /* line 374, ../sass/screen.scss */
+  .dashboard-book img, .book-choice img, .owner-choice img {
+    width: 100px;
+    height: 134px;
+  }
+  /* line 378, ../sass/screen.scss */
+  .dashboard-book button, .book-choice button, .owner-choice button {
+    font-size: 0.9em;
+  }
+
+  /* line 383, ../sass/screen.scss */
+  .login-form input {
+    width: 250px;
+  }
+
+  /* line 388, ../sass/screen.scss */
+  .register-form input {
+    width: 250px;
+  }
+  /* line 391, ../sass/screen.scss */
+  .register-form .states-list {
+    width: 250px;
+  }
+
+  /* line 395, ../sass/screen.scss */
+  .info-wrapper {
+    width: 100%;
+    font-size: 0.9em;
+  }
+
+  /* line 399, ../sass/screen.scss */
+  .image-wrapper {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* line 404, ../sass/screen.scss */
+  #add-book-form input {
+    width: 250px;
+  }
+
+  /* line 408, ../sass/screen.scss */
   .footer {
-    height: 90px;
+    margin: 10px;
+  }
+
+  /* line 411, ../sass/screen.scss */
+  h1, h2 {
+    margin-left: 10px;
+  }
+
+  /* line 415, ../sass/screen.scss */
+  .addition button {
+    width: 80px;
+  }
+
+  /* line 419, ../sass/screen.scss */
+  .more-info {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
   }
 }
