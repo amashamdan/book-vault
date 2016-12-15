@@ -43,7 +43,9 @@ MongoClient.connect(mongoUrl, function(err, db) {
 
 		app.get("/", function(req, res) {
 			if (req.session.user) {
-				res.render("index.ejs", {"user": req.session.user});				
+				books.find({}).limit(4).toArray(function(err, results) {
+					res.render("index.ejs", {"user": req.session.user, "books": results});
+				})			
 			} else {
 				res.render("index.ejs", {"user": undefined});
 			}
@@ -168,73 +170,77 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.get("/dashboard", function(req, res) {
-			users.find({"email": req.session.user.email}).toArray(function(err, result) {
-				if (err) {
-					res.end("error in database");
-				} else {
-					// Update information in req.session.user
-					req.session.user = result[0];
-					delete req.session.user.password;
-					if (result[0].books.length == 0) {
-						res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": undefined});
+			if (req.session.user) {	
+				users.find({"email": req.session.user.email}).toArray(function(err, result) {
+					if (err) {
+						res.end("error in database");
 					} else {
-						var isbns = result[0].books;
-						var userBooks = [];
-						var userRequests = [];
-						var booksPulled = false;
-						var incomingRequestsPulled = false;
-						var outgoingRequestsPulled = false;
-
-						for (var isbn in isbns) {
-							books.find({"isbn": isbns[isbn]}).toArray(function(err, bookResult) {
-								userBooks.push(bookResult[0]);
-								if (userBooks.length == isbns.length) {
-									booksPulled = true;
-									allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
-								}
-							})
-						}
-
-						if (result[0].incomingRequests.length == 0) {
-							incomingRequestsPulled = true;
-							allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
+						// Update information in req.session.user
+						req.session.user = result[0];
+						delete req.session.user.password;
+						if (result[0].books.length == 0) {
+							res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": undefined});
 						} else {
-							for (var item in result[0].incomingRequests) {
-								requests.find({"requestID": result[0].incomingRequests[item]}).toArray(function(err, request) {
-									userRequests.push(request[0]);
-									// requests.length must equal the sum of incoming and outgoing requests.
-									if (userRequests.length == result[0].incomingRequests.length + result[0].outgoingRequests.length) {
-										incomingRequestsPulled = true;
-										outgoingRequestsPulled = true;
+							var isbns = result[0].books;
+							var userBooks = [];
+							var userRequests = [];
+							var booksPulled = false;
+							var incomingRequestsPulled = false;
+							var outgoingRequestsPulled = false;
+
+							for (var isbn in isbns) {
+								books.find({"isbn": isbns[isbn]}).toArray(function(err, bookResult) {
+									userBooks.push(bookResult[0]);
+									if (userBooks.length == isbns.length) {
+										booksPulled = true;
 										allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
 									}
-								});
+								})
 							}
-						}
 
-						if (result[0].outgoingRequests.length == 0) {
-							outgoingRequestsPulled = true;
-							allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);	
-						} else {
-							for (var item in result[0].outgoingRequests) {
-								requests.find({"requestID": result[0].outgoingRequests[item]}).toArray(function(err, request) {
-									userRequests.push(request[0]);
-									if (userRequests.length == result[0].incomingRequests.length + result[0].outgoingRequests.length) {
-										incomingRequestsPulled = true;
-										outgoingRequestsPulled = true;
-										allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
-									}
-								});
+							if (result[0].incomingRequests.length == 0) {
+								incomingRequestsPulled = true;
+								allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
+							} else {
+								for (var item in result[0].incomingRequests) {
+									requests.find({"requestID": result[0].incomingRequests[item]}).toArray(function(err, request) {
+										userRequests.push(request[0]);
+										// requests.length must equal the sum of incoming and outgoing requests.
+										if (userRequests.length == result[0].incomingRequests.length + result[0].outgoingRequests.length) {
+											incomingRequestsPulled = true;
+											outgoingRequestsPulled = true;
+											allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
+										}
+									});
+								}
+							}
+
+							if (result[0].outgoingRequests.length == 0) {
+								outgoingRequestsPulled = true;
+								allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);	
+							} else {
+								for (var item in result[0].outgoingRequests) {
+									requests.find({"requestID": result[0].outgoingRequests[item]}).toArray(function(err, request) {
+										userRequests.push(request[0]);
+										if (userRequests.length == result[0].incomingRequests.length + result[0].outgoingRequests.length) {
+											incomingRequestsPulled = true;
+											outgoingRequestsPulled = true;
+											allDataPulled(booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests);
+										}
+									});
+								}
 							}
 						}
 					}
-				}
-			})
+				})
 
-			function allDataPulled (booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests) {
-				if (booksPulled && incomingRequestsPulled && outgoingRequestsPulled) {
-					res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": userBooks, "userRequests": userRequests});
+				function allDataPulled (booksPulled, incomingRequestsPulled, outgoingRequestsPulled, userBooks, userRequests) {
+					if (booksPulled && incomingRequestsPulled && outgoingRequestsPulled) {
+						res.render("dashboard.ejs", {"user": req.session.user, "csrfToken": req.csrfToken(), "userBooks": userBooks, "userRequests": userRequests});
+					}
 				}
+			} else {
+				res.redirect("/");
 			}
 		});
 
@@ -282,29 +288,58 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		});
 
 		app.post("/remove", parser, function(req, res) {
+			var userUpdated = false;
+			var shelfUpdated = false;
+			var requestsUpdated = false;
+
 			users.update(
 				{"email": req.session.user.email},
 				{"$inc": {"booksAdded": -1}, "$pull": {"books": req.body.isbn}},
 				function() {
-					books.find({"isbn": req.body.isbn}).toArray(function(err, result) {
-						if (result[0].owners.length > 1) {
-							books.update(
-								{"isbn": req.body.isbn},
-								{"$pull": {"owners": req.session.user.email}},
-								function() {
-									res.status(201);
-									res.end();
-								}
-							);
-						} else {
-							books.remove({"isbn": req.body.isbn}, function() {
-								res.status(201);
-								res.end();
-							});
+					userUpdated = true;
+					deleteCompleted();
+				}
+			);
+
+			books.find({"isbn": req.body.isbn}).toArray(function(err, result) {
+				if (result[0].owners.length > 1) {
+					books.update(
+						{"isbn": req.body.isbn},
+						{"$pull": {"owners": req.session.user.email}},
+						function() {
+							shelfUpdated = true;
+							deleteCompleted();
 						}
+					);
+				} else {
+					books.remove({"isbn": req.body.isbn}, function() {
+						shelfUpdated = true;
+						deleteCompleted();
+					});
+				}
+			});
+
+			requests.update(
+				{"requestedBook.isbn": req.body.isbn, "status": "Pending"},
+				{"$set": {"status": "Request unavailable*"}},
+				function() {
+				requests.update(
+					{"tradedBook.isbn": req.body.isbn, "status": "Pending"}, 
+					{"$set": {"status": "Request unavailable*"}},
+					function() {
+						requestsUpdated = true;
+						deleteCompleted();
 					});
 				}
 			);
+
+				
+			function deleteCompleted() {
+				if (userUpdated && shelfUpdated && requestsUpdated) {
+					res.status(201);
+					res.end();
+				}
+			}
 		});
 
 		app.get("/all", function(req, res) {
@@ -379,18 +414,6 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					res.end();
 				}
 			}
-
-			/*
-			users.update(
-				{"email": req.session.user.email},
-				{"$push": {"outgoingRequests": {"requestID": req.body.selectedBookIsbn + req.body.otherUserBookIsbn, "outGoingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "incomingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "otherUser": {"email": req.body.ownerEmail, "name": req.body.ownerName}, "status": "Pending"}}}
-			);
-			users.update(
-				{"email": req.body.ownerEmail},
-				{"$push": {"incomingRequests": {"requestID": req.body.selectedBookIsbn + req.body.otherUserBookIsbn, "outGoingBook": {"isbn": req.body.otherUserBookIsbn, "title": req.body.otherUserBookTitle}, "incomingBook": {"isbn": req.body.selectedBookIsbn, "title": req.body.selectedBookTitle}, "otherUser": {"email": req.session.user.email, "name": req.session.user.name}, "status": "Pending"}}}
-			);
-			res.status(201);
-			res.end();*/
 		});
 
 		app.post("/action/:type", parser, function(req, res) {
