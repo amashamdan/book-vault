@@ -6,18 +6,19 @@
 	<link rel="stylesheet" href="stylesheets/screen.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Proza+Libre" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/29e6464377.css">
 	<script src="scripts/dashboard.js"></script>
 </head>
 <body>
 	<div class="menu">
 		<div class="container">
 			<div class="flex-wrapper">
-				<h2>Book Vault Dashboard</h2>
+				<h2>Dashboard</h2>
 				<div class="button-wrapper">
-					<a href="/"><button class="generic-button">Home</button></a>
-					<a href="/all"><button class="generic-button">All books</button></a>
-					<a href="/profile"><button class="generic-button">Profile</button></a>
-					<a href="/logout"><button class="generic-button">Logout</button></a>
+					<a href="/"><i class="fa fa-home fa-2x" aria-hidden="true"></i></a>
+					<a href="/all"><i class="fa fa-book fa-2x" aria-hidden="true"></i></a>
+					<a href="/profile"><i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i></a>
+					<a href="/logout"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a>
 				</div>
 			</div>
 		</div>
@@ -44,7 +45,7 @@
 
 	<div class="start">
 		<div class="container">
-			<h4 class="requests-section-header">Incoming trading requests:</h4>
+			<h4 class="requests-section-header">Incoming trading requests history:</h4>
 			<% if (user.incomingRequests.length == 0) { %>
 			<p>You have no incoming requests... Maybe your books are boring! Shake your vault up and add some interesting books.</p>
 			<% } else { %>
@@ -53,7 +54,7 @@
 				<% if (userRequests[request].requestedFrom.email == user.email) { %>
 				<div class="dashboard-book">
 					<input type="hidden" id="requestID" value=<%= userRequests[request].requestID %>>
-					<input type="hidden" id="otherUser" value=<%= userRequests[request].requestedFrom.email %>>
+					<input type="hidden" id="otherUser" value=<%= userRequests[request].requestedBy.email %>>
 					<% if (userRequests[request].status == "Pending") { %>
 					<p class="pending">Request pending</p>
 					<button class="request-action approve-request" value="approve">Approve</button>
@@ -64,6 +65,8 @@
 					<a href="mailto:<%= userRequests[request].requestedBy.email %>"><button class="email-button">Email <%= userRequests[request].requestedBy.name %></button></a>
 					<% } else if (userRequests[request].status == "Declined") { %>
 					<p class="denied">Request Declined</p>
+					<% } else if (userRequests[request].status == "Request unavailable*") { %>
+					<p class="address-button">Request Unavailable</p>
 					<% } %>
 					<p><strong>Requested book:</strong> <i><%= userRequests[request].requestedBook.title %></i></p>
 					<p><strong>Requested by:</strong> <i><%= userRequests[request].requestedBy.name %></i></p>
@@ -76,7 +79,7 @@
 
 			<hr/ style="margin: 10px 0 10px 0;">
 
-			<h4 class="requests-section-header">Outgoing trading requests:</h4>
+			<h4 class="requests-section-header">Outgoing trading requests history:</h4>
 			<% if (user.outgoingRequests.length == 0) { %>
 			<p>You have no outgoing requests... Maybe you don't like reading books as much as you thought! Prove us wrong and request a trade.</p>
 			<% } else { %>
@@ -95,7 +98,9 @@
 					<a href="mailto:<%= userRequests[request].requestedFrom.email %>"><button class="email-button">Email <%= userRequests[request].requestedFrom.name %></button></a>
 					<% } else if (userRequests[request].status == "Declined") { %>
 					<p class="denied">Request Declined</p>
-					<% } %>
+					<% } else if (userRequests[request].status == "Request unavailable*") { %>
+					<p class="address-button">Request Unavailable</p>
+					<% } %>%>
 					<p><strong>Requested book:</strong> <i><%= userRequests[request].requestedBook.title %></i></p>
 					<p><strong>Requested from:</strong> <i><%= userRequests[request].requestedFrom.name %></i></p>
 					<p><strong>Trade with: </strong><i><%= userRequests[request].tradedBook.title %></i></p>
@@ -104,6 +109,7 @@
 				<% } %>
 			</div>
 			<% } %>
+			<p>* Unavailable requests occur when a pending request has one of its book deleted by ots owner.</p>
 		</div>
 	</div>
 

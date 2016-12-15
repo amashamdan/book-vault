@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="stylesheets/screen.css"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Proza+Libre" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/29e6464377.css">
 	<script src="scripts/index.js"></script>
 </head>
 <body>
@@ -16,13 +17,13 @@
 				<h1>Book Vault</h1>
 				<div class="button-wrapper">
 					<% if (user == undefined) { %>
-					<a href="/login"><button class="generic-button">Login</button></a>
-					<a href="/signup"><button class="generic-button">Sign up</button></a>
+					<a href="/login"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i></a>
+					<a href="/signup"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i></a>
 					<% } else { %>
-					<a href="/all"><button class="generic-button">All books</button></a>
-					<a href="/dashboard"><button class="generic-button">Dashboard</button></a>
-					<a href="/profile"><button class="generic-button">Profile</button></a>
-					<a href="/logout"><button class="generic-button">Logout</button></a>
+					<a href="/all"><i class="fa fa-book fa-2x" aria-hidden="true"></i></a>
+					<a href="/dashboard"><i class="fa fa-sliders fa-2x" aria-hidden="true"></i></a>
+					<a href="/profile"><i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i></a>
+					<a href="/logout"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i></a>
 					<% } %>
 				</div>
 			</div>
@@ -54,7 +55,16 @@
 	<% if (user) { %>
 	<div class="start">
 		<div class="container">
-			<p>Latest books added:</p>
+			<p>Books our users added:</p>
+			<div class="dashboard-books">
+				<% for (var book in books) { %>
+				<div class="dashboard-book">
+				<img src=<%= books[book].image %>>
+				<p><%= books[book].title %></p>
+				</div>
+				<% } %>
+			</div>
+			<p>Go to <a href="/all" style="color: white;">'All Books'</a> to see a full list of added books.</p>
 		</div>
 	</div>
 	<% } %>
