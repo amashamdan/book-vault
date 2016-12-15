@@ -23,9 +23,8 @@ $(document).ready(function() {
 				break;
 			}
 		}
-		$(".cancel-button").click(function() {
-			$(".more-info").slideUp();
-		});
+
+		cancelButtonClick();
 
 		$(".more-info").slideDown();
 	});
@@ -36,9 +35,8 @@ $(document).ready(function() {
 			$(".more-info").append('<div class="error-message-div"><p class="no-books-message">You dont\'t have any books in your vault! You need to have something to trade with! Add a book then you can make a trade.</p><button class="cancel-button">Close</button></div>');
 
 			$(".more-info").slideDown();
-			$(".cancel-button").click(function() {
-				$(".more-info").slideUp();
-			});
+			cancelButtonClick();
+
 		} else {
 			var otherUserBookIsbn = $(this).siblings("input").attr("value");
 			var otherUserBookTitle = $(this).siblings("p").html();
@@ -60,10 +58,9 @@ $(document).ready(function() {
 			}
 			$("body").addClass("stop-scrolling");
 			$(".more-info").slideDown();
-			$(".cancel-button").click(function() {
-				$(".more-info").slideUp();
-				$("body").removeClass("stop-scrolling");
-			});
+			
+			cancelButtonClick();
+
 			$(".book-choice").click(function() {
 				var selectedBookIsbn = $(this).children("input").attr("value");
 				var selectedBookTitle = $(this).children("p").html();
@@ -72,40 +69,51 @@ $(document).ready(function() {
 					type: "GET",
 					url: "/bookOwners/" + otherUserBookIsbn,
 					success: function(owners) {
-						$(".choice-books").children().remove();
-						$(".choice-books").append('<p>The following Vaulters own the book you are requesting. Select the owner you want to trade with.</p>');
-						for (var owner in owners) {
-							$(".choice-books").append(
-								'<div class="owner-choice">' +
-								'<input type="hidden" value="' + owners[owner].email + '">' +
-								'<p class="otherName">' + owners[owner].name + '</p>' +
-								'<p>' + owners[owner].address + '</p>' +
-								'<p>' + owners[owner].city + '</p>' +
-								'<p>' + owners[owner].state +  '</p>' +
-								'<p>' + owners[owner].zip +  '</p>' +
-								'</div>');
-						}
-						$(".more-info").fadeIn();
-						$(".owner-choice").click(function() {
-							var ownerEmail = $(this).children("input").attr("value");
-							var ownerName = $(this).children(".otherName").html();
-
-							$.ajax({
-								url: "/request",
-								type: "POST",
-								data: {_csrf: csrfToken, ownerEmail: ownerEmail, ownerName: ownerName, otherUserBookIsbn: otherUserBookIsbn, otherUserBookTitle: otherUserBookTitle, selectedBookIsbn: selectedBookIsbn, selectedBookTitle: selectedBookTitle},
-								statusCode: {
-									201: trade201,
-									404: trade404
-								}
-							});
-						})
+						showOwners(owners, otherUserBookIsbn, otherUserBookTitle, selectedBookIsbn, selectedBookTitle)
 					}
 				});
 			});
 		}
 	});
 });
+
+function showOwners(owners, otherUserBookIsbn, otherUserBookTitle, selectedBookIsbn, selectedBookTitle) {
+	$(".choice-books").children().remove();
+	$(".choice-books").append('<p style="width: 100%;">The following Vaulters own the book you are requesting. Select the owner you want to trade with.</p>');
+	for (var owner in owners) {
+		$(".choice-books").append(
+			'<div class="owner-choice">' +
+			'<input type="hidden" value="' + owners[owner].email + '">' +
+			'<p class="otherName">' + owners[owner].name + '</p>' +
+			'<p>' + owners[owner].address + '</p>' +
+			'<p>' + owners[owner].city + '</p>' +
+			'<p>' + owners[owner].state +  '</p>' +
+			'<p>' + owners[owner].zip +  '</p>' +
+			'</div>');
+	}
+	$(".more-info").fadeIn();
+	$(".owner-choice").click(function() {
+		var ownerEmail = $(this).children("input").attr("value");
+		var ownerName = $(this).children(".otherName").html();
+
+		$.ajax({
+			url: "/request",
+			type: "POST",
+			data: {_csrf: csrfToken, ownerEmail: ownerEmail, ownerName: ownerName, otherUserBookIsbn: otherUserBookIsbn, otherUserBookTitle: otherUserBookTitle, selectedBookIsbn: selectedBookIsbn, selectedBookTitle: selectedBookTitle},
+			statusCode: {
+				201: trade201,
+				404: trade404
+			}
+		});
+	})
+}
+
+function cancelButtonClick() {
+	$(".cancel-button").click(function() {
+		$(".more-info").slideUp();
+		$("body").removeClass("stop-scrolling");
+	});
+}
 
 function trade201() {
 	$(".choice-books").children().remove();
