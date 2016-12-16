@@ -14,7 +14,7 @@ $(document).ready(function() {
 function changeLayout(caller) {
 	if (caller == "update-info") {
 		var newContent = '<div class="container">' +
-			"<form class='update-form' action='/update' method='post'>" + 
+			"<form class='update-form' action='/profile/update' method='post'>" + 
 			'<input type="hidden" name="_csrf" value=' + csrfToken + '>' +
 			'<p class="info-header"><strong>Name:</strong></p>' + 
 			'<input type="text" name="name" value="' + name + '">' + 
@@ -28,7 +28,7 @@ function changeLayout(caller) {
 			'</form></div>';
 	} else if (caller == "update-password") {
 		var newContent = '<div class="container">' +
-			"<form class='update-form' id='password-update-form' action='/updatePassword' method='post'>" + 
+			"<form class='update-form' id='password-update-form' action='/profile/updatePassword' method='post'>" + 
 			'<input type="hidden" name="_csrf" value=' + csrfToken + '>' +
 			'<p class="info-header"><strong>New password:</strong><span style="font-size: 0.7em">(8 charachters minimum including a capital letter, number and a special character)</span></p>' + 
 			'<input id="pass1" type="password" name="password1">' + 
