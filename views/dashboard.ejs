@@ -116,7 +116,7 @@
 	<div class="start">
 		<div class="container">
 			<p>Your books:</p>
-			<% if (userBooks == undefined) { %>
+			<% if (userBooks.length == 0) { %>
 			<p>You still haven't added any books.</p>
 			<% } else { %>
 			<div class="dashboard-books">
