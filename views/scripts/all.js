@@ -67,7 +67,7 @@ $(document).ready(function() {
 				$(".more-info").fadeOut();
 				$.ajax({
 					type: "GET",
-					url: "/bookOwners/" + otherUserBookIsbn,
+					url: "/request/bookOwners/" + otherUserBookIsbn,
 					success: function(owners) {
 						showOwners(owners, otherUserBookIsbn, otherUserBookTitle, selectedBookIsbn, selectedBookTitle)
 					}
