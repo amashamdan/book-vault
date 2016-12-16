@@ -55,7 +55,7 @@ $(document).ready(function() {
 		$(".address-div").children().remove();
 		var otherUser = $(this).siblings("#otherUser").attr("value");
 		$.ajax({
-			url: "/user/" + otherUser,
+			url: "/dashboard/user/" + otherUser,
 			type: "GET",
 			success: function(data) {
 				$(".address-div").append(
