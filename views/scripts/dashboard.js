@@ -122,6 +122,9 @@ function showBooks(results) {
 			var categories = results.items[i].volumeInfo.categories;
 			var description = results.items[i].volumeInfo.description;
 			var image = results.items[i].volumeInfo.imageLinks.thumbnail;
+			image = image.split("");
+			image.splice(4, 0, "s");
+			image = image.join("");
 			var pages = results.items[i].volumeInfo.pageCount;
 			/* Each book should have an isbn which is saved. */
 			if (results.items[i].volumeInfo.industryIdentifiers) {
