@@ -24,10 +24,12 @@
 	</div>
 	<div class="start">
 		<div class="container">
+			<!-- Sometimes, an error message is needed to be displayed. It is checked to see if a message is to be shown. -->
 			<% if (message != undefined) { %>
 			<p class="error-message"><%= message %></p>
 			<% } %>
 			<p>Please enter the following information to sign up (all fields are required):</p>
+			<!-- Login form. -->
 			<form class="register-form" method="post" action="/signup">
 				<input type="hidden" name="_csrf" value=<%= csrfToken %>>
 				<p>Name:</p>
@@ -52,6 +54,7 @@
 			</form>
 		</div>
 	</div>
+	<!-- Footer section. -->
 	<div class="footer">
 		<hr/>
 		<div class="container">

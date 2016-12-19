@@ -26,13 +26,16 @@
 
 	<div class="start">
 		<div class="container">
+			<!-- It is checked to see if there are any books in the books collection. -->
 			<% if (allUsersBooks.length == 0) { %>
 			<p>Users don't seem to like reading... None of them has added any! Be the first to add a book from your dashboard.</p>
 			<% } else { %>
 			<p>Here is a list of all the books added by our users. Take a look... if you like something you can request a trade with the owner.</p>
 			<div class="dashboard-books">
+				<!-- A div is inserted for each book found in the database. -->
 				<% for (var book in allUsersBooks) { %>
 				<div class=dashboard-book>
+				<!-- The isbn of each book is hidden. But needed for back end communication. -->
 				<input type="hidden" value=<%= allUsersBooks[book].isbn %>>
 				<button class="dashboard-more-info">More info</button>
 				<% if (user.books.indexOf(allUsersBooks[book].isbn) == -1) { %>
@@ -67,6 +70,7 @@
 		</div>
 	</div>
 	<script>
+		/* These are saved to be used in scripts/all.js. Has to be stringified or an error will occur. */
 		var csrfToken = <%- JSON.stringify(csrfToken) %>;
 		var allUsersBooks = <%- JSON.stringify(allUsersBooks) %>;
 		var user = <%- JSON.stringify(user) %>;

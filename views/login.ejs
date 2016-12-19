@@ -24,7 +24,9 @@
 	</div>
 	<div class="start">
 		<div class="container">
+			<!-- It is checked to see if a message to be shown to the user(like incorrect password or email... etc) -->
 			<% if (message) { %>
+			<!-- If a message is found, its type is checked. The type is needed to decide what class and hence what style to give to the message. -->
 			<% if (messageType == "success") { %>
 			<p class="success-message"><%- JSON.stringify(message) %></p>
 			<% } else if (messageType == "error") { %>
@@ -32,6 +34,7 @@
 			<% } %>
 			<% } %>
 			<p>Please enter your username and password to login:</p>
+			<!-- Login form. -->
 			<form class="login-form" method="post" action="/login">
 				<input type="hidden" name="_csrf" value=<%= csrfToken %>>
 				<p>Email:</p>
@@ -42,6 +45,7 @@
 			</form>
 		</div>
 	</div>
+	<!-- Footer section. --> 
 	<div class="footer">
 		<hr/>
 		<div class="container">

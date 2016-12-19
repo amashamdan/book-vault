@@ -42,26 +42,33 @@
 			</form>
 		</div>
 	</div>
-
+	<!-- Requests section. -->
 	<div class="start">
 		<div class="container">
+			<!-- Incoming requests section. -->
 			<h4 class="requests-section-header">Incoming trading requests history:</h4>
+			<!-- A check is made to see if the user has any incoming requests. --> 
 			<% if (user.incomingRequests.length == 0) { %>
 			<p>You have no incoming requests... Maybe your books are boring! Shake your vault up and add some interesting books.</p>
 			<% } else { %>
+			<!-- If requests are found, the following is added to the page. -->
 			<div class="requests-div">
 				<% for (var request in userRequests) { %>
 				<% if (userRequests[request].requestedFrom.email == user.email) { %>
 				<div class="dashboard-book">
+					<!-- The requestID and other user's email are hidden. Needed to simplify database look up. -->
 					<input type="hidden" id="requestID" value=<%= userRequests[request].requestID %>>
 					<input type="hidden" id="otherUser" value=<%= userRequests[request].requestedBy.email %>>
+					<!-- Request status is checked. -->
 					<% if (userRequests[request].status == "Pending") { %>
 					<p class="pending">Request pending</p>
 					<button class="request-action approve-request" value="approve">Approve</button>
 					<button class="request-action decline-request" value="decline">Decline</button>
 					<% } else if (userRequests[request].status == "Approved") { %>
 					<p class="approved">Request Approved</p>
+					<!-- A button to show the other user's address. -->
 					<button class="address-button"><%= userRequests[request].requestedBy.name %>'s address</button>
+					<!-- A link to email the other user. -->
 					<a href="mailto:<%= userRequests[request].requestedBy.email %>"><button class="email-button">Email <%= userRequests[request].requestedBy.name %></button></a>
 					<% } else if (userRequests[request].status == "Declined") { %>
 					<p class="denied">Request Declined</p>
@@ -78,7 +85,7 @@
 			<% } %>
 
 			<hr/ style="margin: 10px 0 10px 0;">
-
+			<!-- Same as incoming requests section, but for outgoing requests. -->
 			<h4 class="requests-section-header">Outgoing trading requests history:</h4>
 			<% if (user.outgoingRequests.length == 0) { %>
 			<p>You have no outgoing requests... Maybe you don't like reading books as much as you thought! Prove us wrong and request a trade.</p>
@@ -112,14 +119,16 @@
 			<p>* Unavailable requests occur when a pending request has one of its book deleted by ots owner.</p>
 		</div>
 	</div>
-
+	<!-- Your books section. -->
 	<div class="start">
 		<div class="container">
 			<p>Your books:</p>
+			<!-- Check is made to see if the user has any books. -->
 			<% if (userBooks.length == 0) { %>
 			<p>You still haven't added any books.</p>
 			<% } else { %>
 			<div class="dashboard-books">
+				<!-- For each book the user owns, a div is added. -->
 				<% for (var book in userBooks) { %>
 				<div class="dashboard-book">
 					<input type="hidden" class="dashboard-book-isbn" value=<%= userBooks[book].isbn %>>
@@ -133,13 +142,13 @@
 			</div>
 		</div>
 	</div>
-
+	<!-- This div is where the book search results are displayed. Initially empty and hidden, populated by javascript when search is performed. -->
 	<div id="search-results">
 	</div>
-
+	<!-- This div shows the address of the other user when the request is accepted. Populated when address is requested. -->
 	<div class="address-div">
 	</div>
-
+	<!-- Footer section. -->
 	<div class="footer">
 		<hr/>
 		<div class="container">

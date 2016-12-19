@@ -10,15 +10,17 @@
 	<script src="scripts/index.js"></script>
 </head>
 <body>
-	
+	<!-- Menu bar. -->
 	<div class="menu">
 		<div class="container">
 			<div class="flex-wrapper">
 				<h1>Book Vault</h1>
 				<div class="button-wrapper">
+					<!-- Displayed buttons depend on whether a user is logged in or not. So a check is made to see if a user is found. -->
 					<% if (user == undefined) { %>
 					<a href="/login"><i class="fa fa-sign-in fa-2x" aria-hidden="true"></i></a>
 					<a href="/signup"><i class="fa fa-user-plus fa-2x" aria-hidden="true"></i></a>
+					<!-- The following is added if a user is found. -->
 					<% } else { %>
 					<a href="/all"><i class="fa fa-book fa-2x" aria-hidden="true"></i></a>
 					<a href="/dashboard"><i class="fa fa-sliders fa-2x" aria-hidden="true"></i></a>
@@ -29,8 +31,10 @@
 			</div>
 		</div>
 	</div>
+	<!-- Welcome section. -->
 	<div class="start">
 		<div class="container">
+			<!-- Again, the contents of this section depend on whther a user is logged in or not. -->
 			<% if (!user) { %>
 			<p>Welcome to Book Vault, your book trading app!</p>
 			<p>To start using the vault, you need to have an account. Once your good to go, here are the things you can do:</p><br/>
@@ -43,6 +47,7 @@
 				<a href="/signup"><button class="generic-button">Sign up</button></a>
 			</div>
 			<% } else { %>
+			<!-- If a user is logged in, the following renders instead of the top part. --> 
 			<p>Welcome <%- JSON.stringify(user.name) %></p><br/>
 			<p>From the menu bar, you can chose an action:</p><br/>
 			<li>All books: See all books added by all users.</li>
@@ -52,6 +57,7 @@
 			<% } %>
 		</div>
 	</div>
+	<!-- Sample books section, only rendered if a user is found. -->
 	<% if (user) { %>
 	<div class="start">
 		<div class="container">
@@ -68,6 +74,7 @@
 		</div>
 	</div>
 	<% } %>
+	<!-- Footer section. --> 
 	<div class="footer">
 		<hr/>
 		<div class="container">

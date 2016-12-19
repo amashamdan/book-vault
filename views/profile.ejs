@@ -10,6 +10,7 @@
 	<script src="scripts/profile.js"></script>
 </head>
 <body>
+	<!-- Menu bar. -->
 	<div class="menu">
 		<div class="container">
 			<div class="flex-wrapper">
@@ -23,8 +24,10 @@
 			</div>
 		</div>
 	</div>
+	<!-- Information section. -->
 	<div class="start">
 		<div class="container">
+			<!-- Sometimes, a password changing message is needed to be displayed. It is checked here to see if a message is included. -->
 			<% if (passwordUpdateMessage != undefined) { %>
 			<p class="success-message"><%= passwordUpdateMessage %></p>
 			<% } %>
@@ -37,10 +40,12 @@
 			<p class="info"><%= user.address %></p>
 			<p class="info"><%= user.city %>, <%= user.state %> <%= user.zip %></p>
 			<p class="info-header"><strong>Books added:</strong> <%= user.booksAdded %></p><br/>
+			<!-- Two button to allow the user to update information or password. -->
 			<button id="edit" class="generic-button">Edit info</button><br/>
 			<button id="change-password" class="generic-button">Change password</button>
 		</div>
 	</div>
+	<!-- Footer section. -->
 	<div class="footer">
 		<hr/>
 		<div class="container">
@@ -56,6 +61,7 @@
 		</div>
 	</div>
 	<script>
+		/* Saved to be used in scripts/profile.js. */
 		var csrfToken =  <%- JSON.stringify(csrfToken) %>
 		var name = <%- JSON.stringify(user.name) %>;
 		var email = <%- JSON.stringify(user.email) %>;
