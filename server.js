@@ -49,7 +49,7 @@ app.use("/all", all);
 var request = require("./routes/request");
 app.use("/request", request);
 var action = require("./routes/action");
-app.use("action", action);
+app.use("/action", action);
 /* Establish connection to mongo. */
 MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
