@@ -12,6 +12,8 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		res.end("Failed to connect to database.");
 	}
 	/* This is called when the user wants to cancel, approve or decline a request. */
+	var users = db.collection("users");
+	var requests = db.collection("requests");
 	router.route("/:type")
 	.post(parser, function(req, res) {
 		/* If the user wants to cancel a request. */
@@ -30,7 +32,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					/* The first tracking variable is set to true. */
 					user1Updated = true;
 					/* Since using database is asynchronous, things don't happen in order. Other tracking variables are checked and if all is true, response is sent. */
-					if (user1Updated && user2Updated && equestsUpdated) {
+					if if (user1Updated && user2Updated && requestsUpdated) {
 						res.status(200);
 						res.end();
 					}
@@ -43,7 +45,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 				{"$pull": {"incomingRequests": req.body.requestID}},
 				function() {
 					user2Updated = true;
-					if (user1Updated && user2Updated && equestsUpdated) {
+					if (user1Updated && user2Updated && requestsUpdated) {
 						res.status(200);
 						res.end();
 					}
@@ -53,7 +55,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 			requests.remove({"requestID": req.body.requestID}, function() {
 				/* tracking variable set to true and then it is checked to see if the response is ready to be sent. */
 				requestsUpdated = true;
-				if (user1Updated && user2Updated && equestsUpdated) {
+				if (user1Updated && user2Updated && requestsUpdated) {
 					res.status(200);
 					res.end();
 				}
