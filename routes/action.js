@@ -32,7 +32,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 					/* The first tracking variable is set to true. */
 					user1Updated = true;
 					/* Since using database is asynchronous, things don't happen in order. Other tracking variables are checked and if all is true, response is sent. */
-					if if (user1Updated && user2Updated && requestsUpdated) {
+					if (user1Updated && user2Updated && requestsUpdated) {
 						res.status(200);
 						res.end();
 					}
