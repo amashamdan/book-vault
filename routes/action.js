@@ -12,7 +12,7 @@ MongoClient.connect(mongoUrl, function(err, db) {
 		res.end("Failed to connect to database.");
 	}
 	/* This is called when the user wants to cancel, approve or decline a request. */
-	router.route("/action/:type")
+	router.route("/:type")
 	.post(parser, function(req, res) {
 		/* If the user wants to cancel a request. */
 		if (req.params.type == "cancel") {
