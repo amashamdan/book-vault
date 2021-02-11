@@ -2,6 +2,8 @@ var express = require("express");
 var mongodb = require("mongodb");
 var bodyParser = require("body-parser");
 var parser = bodyParser.urlencoded({extended: false});
+var dotenv = require("dotenv");
+dotenv.config();
 /* Creating express router instance. */
 var router = express.Router();
 var MongoClient = mongodb.MongoClient;
@@ -9,7 +11,7 @@ var mongoUrl = process.env.BOOKS;
 /* Establish connection to mongodb. */
 MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
-		res.end("Failed to connect to database.");
+		// res.end("Failed to connect to database.");
 	}
 	/* This is called when the user wants to cancel, approve or decline a request. */
 	var users = db.collection("users");

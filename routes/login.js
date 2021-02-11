@@ -8,6 +8,8 @@ var bcrypt = require("bcryptjs");
 //var csrf = require('csurf');
 //var secure = require('express-force-https');
 //var ejs = require("ejs");
+var dotenv = require("dotenv");
+dotenv.config();
 
 var router = express.Router();
 
@@ -16,7 +18,7 @@ var mongoUrl = process.env.BOOKS;
 
 MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
-		res.end("Failed to connect to database");
+		// res.end("Failed to connect to database");
 	}
 	var users = db.collection("users");
 	router.route("/")

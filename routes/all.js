@@ -1,5 +1,7 @@
 var express = require("express");
 var mongodb = require("mongodb");
+var dotenv = require("dotenv");
+dotenv.config();
 
 var router = express.Router();
 var MongoClient = mongodb.MongoClient;
@@ -7,7 +9,7 @@ var mongoUrl = process.env.BOOKS;
 
 MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
-		res.end("Failed to connect to database.");
+		// res.end("Failed to connect to database.");
 	}
 	var users = db.collection("users");
 	var books = db.collection("shelf");

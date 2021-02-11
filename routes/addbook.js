@@ -2,6 +2,8 @@ var express = require("express");
 var mongodb = require("mongodb");
 var bodyParser = require("body-parser");
 var parser = bodyParser.urlencoded({extended: false});
+var dotenv = require("dotenv");
+dotenv.config();
 
 var router = express.Router();
 var MongoClient = mongodb.MongoClient;
@@ -9,7 +11,7 @@ var mongoUrl = process.env.BOOKS;
 
 MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
-		res.end("Failed to connect to database.");
+		// res.end("Failed to connect to database.");
 	}
 	/* Only these two collecitons needed. */
 	var users = db.collection("users");

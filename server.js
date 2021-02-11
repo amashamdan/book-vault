@@ -5,6 +5,8 @@ var ejs = require("ejs");
 var session = require("client-sessions");
 /* Cross site request forgery. */
 var csrf = require('csurf');
+var dotenv = require("dotenv");
+dotenv.config();
 
 var app = express();
 /* To ensure https */
@@ -54,7 +56,7 @@ app.use("/action", action);
 MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
 		/* If connection to mongo fails. */
-		res.end("Failed to connect to database.");
+		// res.end("Failed to connect to database.");
 	} else {
 		/* This collection has all books added by all users. */
 		var books = db.collection("shelf");
