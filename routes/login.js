@@ -18,6 +18,7 @@ var mongoUrl = process.env.BOOKS;
 
 MongoClient.connect(mongoUrl, function(err, db) {
 	if (err) {
+		console.log(err)
 		// res.end("Failed to connect to database");
 	}
 	var users = db.collection("users");
